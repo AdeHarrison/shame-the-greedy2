@@ -80,16 +80,6 @@ router.post('/register', function (req, res) {
     }
 })
 
-function processSaveError(err) {
-    if (err.message.includes("email_1 dup key")) {
-        return {param: "email", msg: "Email address already registered"};
-    }
-
-    if (err.message.includes("username_1 dup key")) {
-        return {param: "username", msg: "User Name already registered"};
-    }
-}
-
 // Login Form
 router.get('/login', function (req, res) {
     res.render('login', {title: "Login", formData: formUtils.createLoginFormData(req)});
@@ -110,5 +100,15 @@ router.get('/logout', function (req, res) {
     req.flash('success', 'You are logged out');
     res.redirect('/users/login');
 });
+
+function processSaveError(err) {
+    if (err.message.includes("email_1 dup key")) {
+        return {param: "email", msg: "Email address already registered"};
+    }
+
+    if (err.message.includes("username_1 dup key")) {
+        return {param: "username", msg: "User Name already registered"};
+    }
+}
 
 module.exports = router;

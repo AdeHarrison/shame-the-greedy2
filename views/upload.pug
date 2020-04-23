@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    div.container
+        form(method="POST" action="/leeches/upload" enctype="multipart/form-data")
+            div.form-group
+                label(for="shopName") Shop Name:
+                input#shopName.form-control(type="text", placeholder="Shop name" name="shopName" value=formData.shopName)
+            div.form-group
+                label(for="cityTown") City/Town:
+                input#cityTown.form-control(type="text", placeholder="City/Town" name="cityTown" value=formData.cityTown)
+            div.form-group
+                label(for="districtArea") District/Area:
+                input#districtArea.form-control(type="text", placeholder="District/Area" name="districtArea" value=formData.districtArea)
+            div.form-group
+                label(for="comments") Comments:
+                textarea#comments.form-control(placeholder="Comments" name="comments") #{formData.comments}
+            div.form-group
+                p Select a photo:
+                label(for="useStockPhoto") Use random stock photo:
+                input( type="checkbox" id="useStockPhoto" onclick="setFileUploadButtonState()" name="useStockPhoto" checked=formData.useStockPhoto)
+                label(for="shopPhoto") or select a photo to upload:
+                input#shopPhoto.form-control(type="file", name="shopPhoto" accept="image/jpeg, image/png" disabled=true)
+            button.btn.btn-primary(type="submit" name="shopPhoto") Upload

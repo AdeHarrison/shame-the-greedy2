@@ -45,7 +45,36 @@ const createLoginFormData = (req) => {
     }
 }
 
+const createUploadFormData = (req) => {
+    if ("shopName" in req.body) {
+        return {
+            shopName: req.body.shopName,
+            cityTown: req.body.cityTown,
+            districtArea: req.body.districtArea,
+            comments: req.body.comments,
+            useStockPhoto: req.body.useStockPhoto
+        };
+    } else if (process.env.NODE_ENV !== "development") {
+        return {
+            shopName: "",
+            cityTown: "",
+            districtArea: "",
+            comments: "",
+            useStockPhoto: true
+        };
+    } else {
+        return {
+            shopName: "50UPPERCASECHARSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            cityTown: "50UPPERCASECHARSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            districtArea: "50UPPERCASECHARSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            comments: "200UPPERCASECHARSXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            useStockPhoto: true
+        };
+    }
+}
+
 module.exports = {
     createRegisterFormData,
-    createLoginFormData
+    createLoginFormData,
+    createUploadFormData
 }

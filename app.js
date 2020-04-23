@@ -103,8 +103,10 @@ app.get('/', function(req, res){
 // Route Files
 let articles = require('./routes/articles');
 let users = require('./routes/users');
+let leeches = require('./routes/leeches');
 app.use('/articles', articles);
 app.use('/users', users);
+app.use('/leeches', leeches);
 
 // Start Server
 app.listen(3000, function(){
