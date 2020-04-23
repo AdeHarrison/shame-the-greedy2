@@ -1,0 +1,12 @@
+{
+  "email": "irving.beer77@ethereal.email",
+  "password": "a33fba30d67e8ba6e57eb8e9db6fa015f38c64ead4282e724cfacdc7a846135ff3f308f43c4edb9d32b783d9bf16b700d827635ba73ed853e3bc4d1bc22dbfeb",
+  "passwordSalt": "384a5b10a6e0f502",
+  "userName": "HARRY",
+  "verification": "fbf31c1df31586c336498cbfa430da9a8ec7fd793f0a2b688cebf21602dc66cfa16e934ff53543960e3b81498aed99b9f5bc2e558fddd81f0e832c8b4ce87289",
+  "verificationExpiryDate": {
+    "$date": "2020-04-12T14:06:41.149Z"
+  },
+  "verificationSalt": "cb00fa0ac542af2b",
+  "verified": false
+}

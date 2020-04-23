@@ -1,0 +1,16 @@
+{
+  "validUserName": "20UPPERCASECHARSXXX",
+  "invalidUserNamePaddedTooShort": "     abc     ",
+  "invalidUserNamePaddedTooLong": "    21UPPERCASECHARSXXXXX   ",
+  "invalidUserNameInvalidChars": "20UPPERCASECHARS_.-",
+  "validEmail": "irving.beer77@ethereal.email",
+  "invalidEmailPaddedTooShort": " a@c ",
+  "invalidEmailTooShort": "a@c",
+  "invalidEmailPaddedTooLong": " 51UPPERCASECHARS@XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXX ",
+  "invalidEmailTooLong": "51UPPERCASECHARS@XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXX",
+  "invalidEmail": "abc@@abc.com",
+  "validPassword": "6srcxq2X4EPgPbu1U2",
+  "invalidPasswordPaddedTooShort": "     123     ",
+  "invalidPasswordPaddedTooLong": "    21UPPERCASECHARSXXXXX   ",
+  "invalidPasswordInvalidChars": "1234-678"
+}

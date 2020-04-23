@@ -4,7 +4,14 @@
   "description": "Simple knowledgebase app",
   "main": "app.js",
   "scripts": {
-    "start": "node app"
+    "start": "node app",
+    "cypress:open": "cypress open",
+    "db:reset": "mongo --host rs0/localhost:27017 shameTheGreedyDB2 --eval \"db.dropDatabase()\"",
+    "db:createUniqueEmailIndex": "mongo --host rs0/localhost:27017 shameTheGreedyDB2 --eval \"db.users.createIndex({email:1}, {unique:true})\"",
+    "db:createUniqueUserNameIndex": "mongo --host rs0/localhost:27017 shameTheGreedyDB2 --eval \"db.users.createIndex({userName:1}, {unique:true})\"",
+    "db:insert-verified-user": "mongoimport -h rs0/localhost:27017 -d shameTheGreedyDB2 -c users --file utils/registered-verified-user.json & npm run db:createUniqueEmailIndex & npm run db:createUniqueUserNameIndex",
+    "db:insert-unverified-user": "mongoimport -h rs0/localhost:27017 -d shameTheGreedyDB2 -c users --file utils/registered-unverified-user.json",
+    "db:insert-unverified-expired-user": "mongoimport -h rs0/localhost:27017 -d shameTheGreedyDB2 -c users --file utils/registered-unverified-expired-user.json"
   },
   "author": "Brad Traversy",
   "license": "ISC",
@@ -12,6 +19,9 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "connect-flash": "^0.1.1",
+    "cypress": "^4.4.1",
+    "cypress-file-upload": "^4.0.6",
+    "cypress-intellij-reporter": "0.0.4",
     "express": "^4.15.3",
     "express-messages": "^1.0.1",
     "express-session": "^1.15.3",

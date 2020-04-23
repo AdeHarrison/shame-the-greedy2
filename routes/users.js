@@ -62,8 +62,6 @@ router.post('/register', function (req, res) {
                                     formData: formUtils.createRegisterFormData(req),
                                     errors: errors
                                 });
-                                // console.log(err);
-                                // return;
                             } else {
                                 req.flash('success', 'You are now registered and can log in');
                                 res.redirect('/users/login');
