@@ -35,7 +35,7 @@ router.post('/register', function (req, res) {
 
             var errors = result.useFirstErrorOnly().array();
 
-            if (errors.length >0 ) {
+            if (errors.length > 0) {
                 res.render('register', {
                     formData: formUtils.createRegisterFormData(req),
                     errors: errors
@@ -56,8 +56,14 @@ router.post('/register', function (req, res) {
 
                         user.save(function (err) {
                             if (err) {
-                                console.log(err);
-                                return;
+                                errors.push(processSaveError(err));
+
+                                res.render('register', {
+                                    formData: formUtils.createRegisterFormData(req),
+                                    errors: errors
+                                });
+                                // console.log(err);
+                                // return;
                             } else {
                                 req.flash('success', 'You are now registered and can log in');
                                 res.redirect('/users/login');
@@ -67,76 +73,21 @@ router.post('/register', function (req, res) {
                 });
             }
         });
-        // const errors = req.validationErrors();
-        // if (errors.length ==0) {
-        //     return next();
-        // }
-        // const extractedErrors = []
-        // errors.array({ onlyFirstError: true }).map(err => extractedErrors.push({ [err.param]: err.msg }));
-        //
-        // return res.status(422).json({
-        //     errors: extractedErrors,
-        // });
-        // // let errors = req.validationErrors().useFirstErrorOnly().array();
-        //
-        // if (errors) {
-        //     res.render('register', {
-        //         errors: errors
-        //     });
-        // }
     } catch (err) {
         console.error(err);
         throw err;
     }
-    //
-    //
-    // const name = req.body.name;
-    // const email = req.body.email;
-    // const username = req.body.username;
-    // const password = req.body.password;
-    // const password2 = req.body.password2;
-    //
-    // req.checkBody('name', 'Name is required').notEmpty();
-    // req.checkBody('email', 'Email is required').notEmpty();
-    // req.checkBody('email', 'Email is not valid').isEmail();
-    // req.checkBody('username', 'Username is required').notEmpty();
-    // req.checkBody('password', 'Password is required').notEmpty();
-    // req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-    //
-    // let errors = req.validationErrors();
-    //
-    // if (errors) {
-    //     res.render('register', {
-    //         errors: errors
-    //     });
-    // } else {
-    //     let newUser = new User({
-    //         name: name,
-    //         email: email,
-    //         username: username,
-    //         password: password
-    //     });
-    //
-    //     bcrypt.genSalt(10, function (err, salt) {
-    //         bcrypt.hash(newUser.password, salt, function (err, hash) {
-    //             if (err) {
-    //                 console.log(err);
-    //             }
-    //             newUser.password = hash;
-    //             newUser.save(function (err) {
-    //                 if (err) {
-    //                     console.log(err);
-    //                     return;
-    //                 } else {
-    //                     req.flash('success', 'You are now registered and can log in');
-    //                     res.redirect('/users/login');
-    //                 }
-    //             });
-    //         });
-    //     });
-    // }
-})
-;
+});
+
+function processSaveError(err) {
+    if (err.message.includes("email_1 dup key")) {
+        return {param: "email", msg: "Email address already registered"};
+    }
+
+    if (err.message.includes("userName_1 dup key")) {
+        return {param: "userName", msg: "User Name already registered"};
+    }
+}
 
 // Login Form
 router.get('/login', function (req, res) {
