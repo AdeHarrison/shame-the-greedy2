@@ -18,7 +18,7 @@ const userSchema = new Schema({
         trim: true,
         unique: true,
         lowercase: true,
-        required:true
+        required: true
     },
     userName: {
         type: String,
@@ -31,6 +31,7 @@ const userSchema = new Schema({
         type: String,
         trim: true
     },
+    passwordSalt: String,
 });
 
 const User = mongoose.model("User", userSchema);

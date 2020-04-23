@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const formUtils = require("../utils/form")
 const User = require('../models/user');
+const security = require('../utils/security');
 
 // Register Form
 router.get('/register', function (req, res) {
@@ -41,17 +42,16 @@ router.post('/register', function (req, res) {
                     errors: errors
                 });
             } else {
-                bcrypt.genSalt(10, function (err, salt) {
-                    bcrypt.hash(req.body.password, salt, function (err, hash) {
-                        if (err) {
-                            console.log(err);
-                        }
+                security.generateSalt(10).then(salt => {
+
+                    security.hashPassword(req.body.password, salt).then(hash => {
 
                         let user = new User({
                             name: req.body.name,
                             email: req.body.email,
                             userName: req.body.userName,
-                            password: hash
+                            password: hash,
+                            passwordSalt: salt
                         });
 
                         user.save(function (err) {
@@ -67,15 +67,18 @@ router.post('/register', function (req, res) {
                                 res.redirect('/users/login');
                             }
                         });
+                    }).catch(err => {
+                        console.log(err);
                     });
                 });
             }
         });
-    } catch (err) {
+    } catch
+        (err) {
         console.error(err);
         throw err;
     }
-});
+})
 
 function processSaveError(err) {
     if (err.message.includes("email_1 dup key")) {

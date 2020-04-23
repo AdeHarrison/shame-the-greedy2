@@ -1,4 +1,4 @@
-const createRegisterParams = (req) => {
+const createRegisterFormData = (req) => {
     if ("name" in req.body) {
         return {
             name: req.body.name,
@@ -27,5 +27,5 @@ const createRegisterParams = (req) => {
 }
 
 module.exports = {
-    createRegisterFormData: createRegisterParams
+    createRegisterFormData
 }
