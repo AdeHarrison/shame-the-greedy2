@@ -22,7 +22,7 @@ router.post('/register', function (req, res) {
             .isEmail()
             .len({min: 5, max: 50});
 
-        req.checkBody('userName', 'User Name must be 1-20 alphanumeric characters long')
+        req.checkBody('username', 'User Name must be 1-20 alphanumeric characters long')
             .len({min: 1, max: 20})
             .isAlphanumeric();
 
@@ -49,7 +49,7 @@ router.post('/register', function (req, res) {
                         let user = new User({
                             name: req.body.name,
                             email: req.body.email,
-                            userName: req.body.userName,
+                            username: req.body.username,
                             password: hash,
                             passwordSalt: salt
                         });
@@ -85,14 +85,14 @@ function processSaveError(err) {
         return {param: "email", msg: "Email address already registered"};
     }
 
-    if (err.message.includes("userName_1 dup key")) {
-        return {param: "userName", msg: "User Name already registered"};
+    if (err.message.includes("username_1 dup key")) {
+        return {param: "username", msg: "User Name already registered"};
     }
 }
 
 // Login Form
 router.get('/login', function (req, res) {
-    res.render('login');
+    res.render('login', {title: "Login", formData: formUtils.createLoginFormData(req)});
 });
 
 // Login Process

@@ -19,7 +19,7 @@ describe("Verification", () => {
 
                 cy.get("[id='register']").click();
 
-                cy.get("[id='userName']")
+                cy.get("[id='username']")
                     .clear()
                     .type(register.validUserName)
                     .should("have.value", register.validUserName);

@@ -4,10 +4,10 @@ block content
   h1 Login
   form(method='POST', action='/users/login')
     #form-group
-      label Username:
-      input.form-control(name='username',type='text')
+      label UserName:
+      input.form-control(name='username',type='text' value=formData.username)
     #form-group
       label Password:
-      input.form-control(name='password',type='password')
+      input.form-control(name='password',type='password' value=formData.password)
     br
     input.btn.btn-primary(type='submit',value='Submit')

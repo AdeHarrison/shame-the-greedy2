@@ -19,7 +19,7 @@ describe("Registration", () => {
 
                 cy.get("[id='register']").click();
 
-                cy.get("[id='userName']")
+                cy.get("[id='username']")
                     .clear()
                     .type(register.validUserName)
                     .should("have.value", register.validUserName);
@@ -61,7 +61,7 @@ describe("Registration", () => {
 
                     cy.get("[id='register']").click();
 
-                    cy.get("[id='userName']")
+                    cy.get("[id='username']")
                         .clear()
                         .type(register.validUserName)
                         .should("have.value", register.validUserName);
@@ -97,7 +97,7 @@ describe("Registration", () => {
 
                     cy.get("[id='register']").click();
 
-                    cy.get("[id='userName']")
+                    cy.get("[id='username']")
                         .clear()
                         .type(register.validUserName)
                         .should("have.value", register.validUserName);
@@ -139,7 +139,7 @@ describe("Registration", () => {
 
                 cy.get("[id='register']").click();
 
-                cy.get("[id='userName']")
+                cy.get("[id='username']")
                     .clear()
                     .type(register.invalidUserNamePaddedTooShort)
                     .should("have.value", register.invalidUserNamePaddedTooShort);
@@ -182,7 +182,7 @@ describe("Registration", () => {
 
                 cy.get("[id='register']").click();
 
-                cy.get("[id='userName']")
+                cy.get("[id='username']")
                     .clear()
                     .type(register.invalidUserNamePaddedTooLong)
                     .should("have.value", register.invalidUserNamePaddedTooLong);
@@ -225,7 +225,7 @@ describe("Registration", () => {
 
                 cy.get("[id='register']").click();
 
-                cy.get("[id='userName']")
+                cy.get("[id='username']")
                     .clear()
                     .type(register.invalidUserNameInvalidChars)
                     .should("have.value", register.invalidUserNameInvalidChars);
