@@ -1,3 +1,7 @@
+function createIndexParams(req, leeches) {
+    return {leeches: leeches};
+}
+
 const createRegisterFormData = (req) => {
     if ("name" in req.body) {
         return {
@@ -74,6 +78,7 @@ const createUploadFormData = (req) => {
 }
 
 module.exports = {
+    createIndexParams,
     createRegisterFormData,
     createLoginFormData,
     createUploadFormData

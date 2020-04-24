@@ -7,6 +7,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const config = require('./config/database');
+const Leech = require("./models/leech");
+const formUtils = require("./utils/form")
 
 // const userRouter = require("./routes/users");
 
@@ -14,13 +16,13 @@ mongoose.connect(config.database);
 let db = mongoose.connection;
 
 // Check connection
-db.once('open', function(){
-  console.log('Connected to MongoDB');
+db.once('open', function () {
+    console.log('Connected to MongoDB');
 });
 
 // Check for DB errors
-db.on('error', function(err){
-  console.log(err);
+db.on('error', function (err) {
+    console.log(err);
 });
 
 // Init App
@@ -36,7 +38,7 @@ app.set('view engine', 'pug');
 
 // Body Parser Middleware
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 // parse application/json
 app.use(bodyParser.json());
 
@@ -45,34 +47,34 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Express Session Middleware
 app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true
 }));
 
 // Express Messages Middleware
 app.use(require('connect-flash')());
 app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
+    res.locals.messages = require('express-messages')(req, res);
+    next();
 });
 
 // Express Validator Middleware
 app.use(expressValidator({
-  errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
+    errorFormatter: function (param, msg, value) {
+        var namespace = param.split('.')
+            , root = namespace.shift()
+            , formParam = root;
 
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
+        while (namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
     }
-    return {
-      param : formParam,
-      msg   : msg,
-      value : value
-    };
-  }
 }));
 
 // Passport Config
@@ -81,23 +83,22 @@ require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('*', function(req, res, next){
-  res.locals.user = req.user || null;
-  next();
+app.get('*', function (req, res, next) {
+    res.locals.user = req.user || null;
+    next();
 });
 
 // Home Route
-app.get('/', function(req, res){
-  Article.find({}, function(err, articles){
-    if(err){
-      console.log(err);
-    } else {
-      res.render('index', {
-        title:'Articles',
-        articles: articles
-      });
-    }
-  });
+app.get('/', function (req, res) {
+    let sortParams = {voteCount: "descending"};
+
+    Leech.find({}).sort(sortParams).exec((err, leeches) => {
+        if (err) {
+            return console.error(err);
+        }
+
+        res.render("index", formUtils.createIndexParams(req, leeches));
+    });
 });
 
 // Route Files
@@ -109,6 +110,6 @@ app.use('/users', users);
 app.use('/leeches', leeches);
 
 // Start Server
-app.listen(3000, function(){
-  console.log('Server started on port 3000...');
+app.listen(3000, function () {
+    console.log('Server started on port 3000...');
 });

@@ -8,7 +8,7 @@ const security = require('../utils/security');
 
 // Register Form
 router.get('/register', function (req, res) {
-    res.render('register', {title: "Register New User", formData: formUtils.createRegisterFormData(req)});
+    res.render('register', {formData: formUtils.createRegisterFormData(req)});
 });
 
 // Register Proccess
@@ -82,7 +82,7 @@ router.post('/register', function (req, res) {
 
 // Login Form
 router.get('/login', function (req, res) {
-    res.render('login', {title: "Login", formData: formUtils.createLoginFormData(req)});
+    res.render('login', {formData: formUtils.createLoginFormData(req)});
 });
 
 // Login Process

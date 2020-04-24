@@ -17,7 +17,7 @@ const CLIENT_UPLOAD_DIRECTORY = "/images/uploads/";
 
 // Upload Form
 router.get('/upload', function (req, res) {
-    res.render('upload', {title: "Upload New Leech", formData: formUtils.createUploadFormData(req)});
+    res.render('upload', {formData: formUtils.createUploadFormData(req)});
 });
 
 // Upload Process
