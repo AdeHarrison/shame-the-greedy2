@@ -11,7 +11,7 @@ const leechSchema = new Schema({
         type: String,
         trim: true,
         uppercase: true,
-        required:true
+        required: true
     },
     cityTown: {
         type: String,
@@ -33,11 +33,13 @@ const leechSchema = new Schema({
         type: String,
         required: [true, "You must select a stock photo or upload one"]
     },
-    voteCount: {type:Number,
-        default:0},
+    voteCount: {
+        type: Number,
+        default: 0
+    },
     userId: String
 });
-
+//todo compound index here on 1st 3 fields
 const Leech = mongoose.model("Leech", leechSchema);
 
 module.exports = Leech;

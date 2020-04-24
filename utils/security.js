@@ -1,6 +1,7 @@
 "use strict";
 
 const bcrypt = require('bcryptjs');
+const crypto = require("crypto");
 
 const generateSalt = async (saltRounds) => {
     return new Promise((resolve, reject) => {
@@ -40,7 +41,7 @@ const hashPassword = async (password, salt) => {
 //     return hashedPassword
 // }
 //
-// const crypto = require("crypto");
+//
 //
 // let generateSalt = function (length) {
 //     return crypto.randomBytes(Math.ceil(length / 2))
@@ -75,10 +76,10 @@ const hashPassword = async (password, salt) => {
 //     return sha512(text, salt);
 // }
 //
-// function generateRandomHex(len) {
-//     return crypto.randomBytes(len).toString('hex');
-// }
-//
+function generateRandomHex(len) {
+    return crypto.randomBytes(len).toString('hex');
+}
+
 module.exports = {
-    generateSalt, hashPassword
+    generateSalt, hashPassword, generateRandomHex
 };
