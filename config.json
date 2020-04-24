@@ -1,0 +1,25 @@
+{
+  "development": {
+    "config_id": "development",
+    "node_port": 7000,
+    "databaseURL": "mongodb://localhost:27017/shameTheGreedyDB?replicaSet=rs0",
+    "verification_timeout": 3600,
+    "database": "shameTheGreedyDB",
+    "maxVotesPerDay": 100,
+    "json_indentation": 4
+  },
+  "testing": {
+    "config_id": "testing",
+    "maxVotesPerDay": 10
+  },
+  "staging": {
+    "config_id": "staging",
+    "verification_timeout": 604800,
+    "maxVotesPerDay": 10
+  },
+  "production": {
+    "config_id": "production",
+    "verification_timeout": 604800,
+    "maxVotesPerDay": 10
+  }
+}

@@ -3,27 +3,26 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
-const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
-const config = require('./config/database');
 const Leech = require("./models/leech");
 const formUtils = require("./utils/form")
+const config = require('./config/config.js');
+const schedule = require('node-schedule');
+const serverSideUtils = require('./utils/server-side-utils');
 
-// const userRouter = require("./routes/users");
-
-mongoose.connect(config.database);
+// Mongoose
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
+mongoose.connect(gConfig.databaseURL, {useNewUrlParser: true, useUnifiedTopology: true});
 let db = mongoose.connection;
-
-// Check connection
-db.once('open', function () {
-    console.log('Connected to MongoDB');
+db.on("error", console.error.bind(console, "Failed to connect to " + gConfig.databaseURL));
+db.once("open", () => {
+    console.log("Successfully connected to " + gConfig.databaseURL);
 });
 
-// Check for DB errors
-db.on('error', function (err) {
-    console.log(err);
-});
+setupVotingLimits();
 
 // Init App
 const app = express();
@@ -113,3 +112,11 @@ app.use('/leeches', leeches);
 app.listen(3000, function () {
     console.log('Server started on port 3000...');
 });
+
+function setupVotingLimits() {
+    gConfig.todaysUTCDate = serverSideUtils.getUTCDate();
+
+    schedule.scheduleJob({hour: 0, minute: 1}, function () {
+        gConfig.todaysUTCDate = serverSideUtils.getUTCDate();
+    });
+}
