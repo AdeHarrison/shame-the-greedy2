@@ -5,21 +5,31 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const passport = require('passport');
-const Leech = require("./models/leech");
 const formUtils = require("./utils/form")
 const config = require('./config/config.js');
 const schedule = require('node-schedule');
 const serverSideUtils = require('./utils/server-side-utils');
+
+const User = require('./models/user');
+const Leech = require("./models/leech");
+const VoteCount = require("./models/voteCount");
+const Vote = require("./models/vote");
 
 // Mongoose
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
 mongoose.connect(gConfig.databaseURL, {useNewUrlParser: true, useUnifiedTopology: true});
+
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "Failed to connect to " + gConfig.databaseURL));
 db.once("open", () => {
     console.log("Successfully connected to " + gConfig.databaseURL);
+
+    User.createCollection();
+    Leech.createCollection();
+    VoteCount.createCollection();
+    Vote.createCollection();
 });
 
 setupVotingLimits();

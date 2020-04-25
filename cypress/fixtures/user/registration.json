@@ -9,7 +9,7 @@
   "invalidEmailPaddedTooLong": " 51UPPERCASECHARS@XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXX ",
   "invalidEmailTooLong": "51UPPERCASECHARS@XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXX",
   "invalidEmail": "abc@@abc.com",
-  "validPassword": "6srcxq2X4EPgPbu1U2",
+  "validPassword": "6srcxq2X4c",
   "invalidPasswordPaddedTooShort": "     123     ",
   "invalidPasswordPaddedTooLong": "    21UPPERCASECHARSXXXXX   ",
   "invalidPasswordInvalidChars": "1234-678"

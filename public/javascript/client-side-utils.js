@@ -9,7 +9,7 @@ function setFileUploadButtonState() {
 }
 
 function voteUp(leechId) {
-    let url = "/leech/leech?vote=1&id=" + leechId;
+    let url = "/leeches/vote?vote=1&id=" + leechId;
 
     $.get({url: url}).then((votingStats) => {
 

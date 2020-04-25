@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -5,10 +6,12 @@ const passport = require('passport');
 const formUtils = require("../utils/form")
 const User = require('../models/user');
 const security = require('../utils/security');
-const Leech = require("../models/leech");
 const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
+const VoteCount = require("../models/voteCount");
+const Leech = require("../models/leech");
+const Vote = require("../models/vote");
 
 const uploadDirectory = multer({dest: "public/images/uploads"});
 
@@ -96,6 +99,56 @@ router.post('/upload', uploadDirectory.single("shopPhoto"), function (req, res) 
         throw err;
     }
 })
+
+router.get('/vote', (req, res) => {
+    _leech_vote_get(req.user._id, gConfig.todaysUTCDate, req.query.id).then(votingStats => {
+        return res.send(votingStats);
+    });
+});
+
+const _leech_vote_get = async (userId, voteDay, leechId) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    try {
+        let searchParams = {userId: userId, voteDay: voteDay};
+
+        let voteCount = await VoteCount.findOneAndUpdate(searchParams, {$inc: {voteDayCount: 1}}, {
+            new: true,
+            upsert: true
+        }).session(session);
+
+        let leech = await Leech.findOneAndUpdate({_id: leechId}, {$inc: {voteCount: 1}}, {
+            new: true,
+            upsert: true
+        }).session(session);
+
+        let vote = new Vote({
+            userId: userId,
+            leechId: leech._id,
+            voteDate: new Date().toUTCString()
+        });
+
+        await vote.save();
+
+        await session.commitTransaction();
+
+        let votingStats = {
+            leechVotes: leech.voteCount.toString(),
+            votesToday: voteCount.voteDayCount.toString(),
+            votesRemaining: (gConfig.maxVotesPerDay - voteCount.voteDayCount).toString()
+        };
+
+        return votingStats;
+    } catch (err) {
+        await session.abortTransaction();
+
+        console.error(err);
+        throw err;
+    } finally {
+        session.endSession();
+    }
+}
+
 
 const resizeImage = async (filePath) => {
     let oldFileName = path.basename(filePath);

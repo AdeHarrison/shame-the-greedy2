@@ -11,7 +11,7 @@ block content
                         | Votes of Shame : &nbsp&nbsp
                         a(id="leechVotes-" + leech._id) #{leech.voteCount}
                         //if session.votesRemaining > 0
-                        //  a.btn.btn-primary(id="idUp-" + leech._id onclick="voteUp(\"" + leech._id + "\")" href="#") +
+                        a.btn.btn-primary(id="idUp-" + leech._id onclick="voteUp(\"" + leech._id + "\")" href="#") +
                     div.image(style=`background: url("${leech.photoLocation}") top center no-repeat; background-size: cover;`)
                 div.detail
                     label#asd(for="shopName") Shop Name:

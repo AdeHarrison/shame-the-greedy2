@@ -3,7 +3,7 @@ html
     head
         link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
         link(rel='stylesheet' href='/css/style.css')
-        script(src="/js/client-side-utils.js")
+        script(src="/javascript/client-side-utils.js")
     body
         nav.navbar.navbar-inverse
             .container
@@ -23,6 +23,11 @@ html
                                 a(href="/leeches/upload" id="upload") Upload
                     ul.nav.navbar-nav.navbar-right
                         if user
+                            a Votes Cast Today
+                            a(id="votesToday") #{votesToday}
+                            a Votes Remaining
+                            a(id="votesRemainingToday") #{votesRemaining}
+                            a Logged in as '#{user.username}'
                             li
                                 a(href='/users/logout') Logout
                         else
@@ -42,4 +47,4 @@ html
                 p Copyright &copy; 2020
         script(src='/bower_components/jquery/dist/jquery.js')
         script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
-        script(src='/js/main.js')
+        script(src='/javascript/main.js')

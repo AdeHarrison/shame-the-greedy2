@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const formUtils = require("../utils/form")
 const User = require('../models/user');
+const VoteCount = require('../models/voteCount');
 const security = require('../utils/security');
 
 // Register Form
@@ -85,12 +86,25 @@ router.get('/login', function (req, res) {
 });
 
 // Login Process
-router.post('/login', function (req, res, next) {
+router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/',
+        successRedirect: '/users/stats',
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next);
+});
+
+router.get('/stats', function (req, res) {
+    getUserVotingStats(req.user._id, gConfig.todaysUTCDate).then(votingStats => {
+        let sess = req.session;
+
+        sess.votesToday = votingStats.votesToday;
+        sess.votesRemaining = votingStats.votesRemaining;
+
+        res.redirect("/");
+    }).catch(err => {
+        return console.error(err);
+    });
 });
 
 // logout
@@ -109,5 +123,22 @@ function processSaveError(err) {
         return {param: "username", msg: "User Name already registered"};
     }
 }
+
+const getUserVotingStats = async (userId, voteDay) => {
+    let searchParams = {userId: userId, voteDay: voteDay};
+
+    let voteCount = await VoteCount.findOne(searchParams);
+
+    if (!voteCount) {
+        voteCount = await VoteCount.create(searchParams);
+    }
+
+    let votingStats = {
+        votesToday: voteCount.voteDayCount.toString(),
+        votesRemaining: (gConfig.maxVotesPerDay - voteCount.voteDayCount).toString()
+    };
+
+    return votingStats;
+};
 
 module.exports = router;
