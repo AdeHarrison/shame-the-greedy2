@@ -18,6 +18,15 @@ const uploadDirectory = multer({dest: "public/images/uploads"});
 const SERVER_UPLOAD_DIRECTORY = "public/images/uploads/";
 const CLIENT_UPLOAD_DIRECTORY = "/images/uploads/";
 
+router.get("/*", function (req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        req.flash('danger', 'Please login');
+        res.redirect('/users/login');
+    }
+});
+
 // Upload Form
 router.get('/upload', function (req, res) {
     res.render('upload', {formData: formUtils.createUploadFormData(req)});

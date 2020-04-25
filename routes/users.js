@@ -80,6 +80,10 @@ router.post('/register', function (req, res) {
     }
 })
 
+router.get('/authenticated', function (req, res) {
+    res.send(req.isAuthenticated());
+});
+
 // Login Form
 router.get('/login', function (req, res) {
     res.render('login', {formData: formUtils.createLoginFormData(req)});

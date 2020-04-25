@@ -9,20 +9,29 @@ function setFileUploadButtonState() {
 }
 
 function voteUp(leechId) {
-    let url = "/leeches/vote?vote=1&id=" + leechId;
+    let url = "/users/authenticated";
 
-    $.get({url: url}).then((votingStats) => {
+    $.get({url: url}).then((isAuthenticated) => {
 
-        // todo not pretty but will do for now
-        if (!votingStats.leechVotes) {
-            window.location.replace(window.location.origin);
+        if (!isAuthenticated) {
+            window.location.replace("/users/login");
         } else {
-            $("#leechVotes-" + leechId).text(votingStats.leechVotes);
+            url = "/leeches/vote?vote=1&id=" + leechId;
 
-            refreshStats(votingStats.votesToday, votingStats.votesRemaining);
+            $.get({url: url}).then((votingStats) => {
+
+                // todo not pretty but will do for now
+                if (!votingStats.leechVotes) {
+                    window.location.replace(window.location.origin);
+                } else {
+                    $("#leechVotes-" + leechId).text(votingStats.leechVotes);
+
+                    refreshStats(votingStats.votesToday, votingStats.votesRemaining);
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
         }
-    }).catch((err) => {
-        console.log(err);
     });
 }
 
