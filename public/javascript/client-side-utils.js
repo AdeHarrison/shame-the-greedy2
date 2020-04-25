@@ -19,15 +19,9 @@ function voteUp(leechId) {
             url = "/leeches/vote?vote=1&id=" + leechId;
 
             $.get({url: url}).then((votingStats) => {
+                $("#leechVotes-" + leechId).text(votingStats.leechVotes);
 
-                // todo not pretty but will do for now
-                if (!votingStats.leechVotes) {
-                    window.location.replace(window.location.origin);
-                } else {
-                    $("#leechVotes-" + leechId).text(votingStats.leechVotes);
-
-                    refreshStats(votingStats.votesToday, votingStats.votesRemaining);
-                }
+                refreshStats(votingStats.votesToday, votingStats.votesRemaining);
             }).catch((err) => {
                 console.log(err);
             });
