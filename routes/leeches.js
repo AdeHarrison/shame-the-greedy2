@@ -24,17 +24,17 @@ router.get('/upload', function (req, res) {
 router.post('/upload', uploadDirectory.single("shopPhoto"), function (req, res) {
     const name = req.body.cityTown;
     try {
-        req.checkBody('shopName', 'Shop Name must be 2-50 characters long')
-            .len({min: 2, max: 50});
+        req.checkBody('shopName', 'Shop Name must be 2-30 characters long')
+            .len({min: 2, max: 30});
 
-        req.checkBody('cityTown', "City/Town must be 1-50 characters long")
-            .len({min: 1, max: 50});
+        req.checkBody('cityTown', "City/Town must be 1-30 characters long")
+            .len({min: 1, max: 30});
 
-        req.checkBody('districtArea', "District/Area must be 1-50 characters long")
-            .len({min: 1, max: 50});
+        req.checkBody('districtArea', "District/Area must be 1-30 characters long")
+            .len({min: 1, max: 30});
 
-        req.checkBody('comments', "Comments can be upto 200 characters long")
-            .len({max: 200});
+        req.checkBody('comments', "Comments can be upto 100 characters long")
+            .len({max: 100})
 
         // TODO LIMIT FIZE SIZE
 

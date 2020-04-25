@@ -14,20 +14,19 @@ router.get('/register', function (req, res) {
 // Register Proccess
 router.post('/register', function (req, res) {
     try {
-        req.checkBody('name', 'User Name must be 4-20 alphanumeric characters long')
+        req.checkBody('name', 'User Name must be 4-20 characters long')
             .len({min: 4, max: 20})
-            .isAlphanumeric();
 
-        req.checkBody('email', "Email address must be valid and between 5-50 alphanumeric characters long")
+        req.checkBody('email', "Email address must be valid and 5-30 characters long")
             .isEmail()
-            .len({min: 5, max: 50});
+            .len({min: 5, max: 30});
 
         req.checkBody('username', 'User Name must be 1-20 alphanumeric characters long')
             .len({min: 1, max: 20})
             .isAlphanumeric();
 
-        req.checkBody('password', 'Password must be between 8 and 20 alphanumeric characters')
-            .len({min: 8, max: 20})
+        req.checkBody('password', 'Password must be 8-10 alphanumeric characters long')
+            .len({min: 8, max: 10})
             .isAlphanumeric();
 
         req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
