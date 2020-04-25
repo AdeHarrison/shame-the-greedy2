@@ -9,38 +9,38 @@ html {
 }
 
 /* Body */
-body {
-    background-color: lawngreen;
-    /*font-family: verdana;*/
-    /*font-weight: bold;*/
-    /*font-size: medium;*/
-}
+/*body {*/
+/*    !*background-color: lawngreen;*!*/
+/*    !*font-family: verdana;*!*/
+/*    !*font-weight: bold;*!*/
+/*    !*font-size: medium;*!*/
+/*}*/
 
-/* Header */
-.header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #525286;
-    color: #FFFFFF;
-}
+/*!* Header *!*/
+/*.header {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    background-color: #525286;*/
+/*    color: #FFFFFF;*/
+/*}*/
 
 /* The navbar container */
-.topnav {
-    /*width: 100vw;*/
-    overflow: hidden;
-    background-color: #333;
-}
+/*.topnav {*/
+/*    !*width: 100vw;*!*/
+/*    overflow: hidden;*/
+/*    background-color: #333;*/
+/*}*/
 
-/* Navbar links */
-.topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 5px;
-    text-decoration: none;
-}
+/*!* Navbar links *!*/
+/*.topnav a {*/
+/*    float: left;*/
+/*    display: block;*/
+/*    color: #f2f2f2;*/
+/*    text-align: center;*/
+/*    padding: 14px 5px;*/
+/*    text-decoration: none;*/
+/*}*/
 
 /* Links - change color on hover */
 .topnav a:hover {
@@ -49,28 +49,29 @@ body {
 }
 
 
-div.leech {
-    display: block;
-    overflow: auto;
-    width: 100vw;
-    background-color: lightpink;
-    float: left;
-    padding-left: 5px;
-    padding-top: 10px;
-    padding-bottom: 5px;
-    padding-right: 5px;
-    border: black;
-}
+/*div.leech {*/
+/*    display: block;*/
+/*    overflow: auto;*/
+/*    width: 100vw;*/
+/*    background-color: lightpink;*/
+/*    float: left;*/
+/*    padding-left: 5px;*/
+/*    padding-top: 10px;*/
+/*    padding-bottom: 5px;*/
+/*    padding-right: 5px;*/
+/*    border: black;*/
+/*}*/
 
 div.vote {
-    float: left;
+    /*float: left;*/
+    width: 200px;
     background-color: yellow;
 }
 
 div.voting {
     background-color: orange;
     text-align: center;
-    border-radius: inherit;
+    /*border-radius: inherit;*/
     height: 35px;
 }
 
@@ -94,34 +95,34 @@ div.details {
 
 div label {
     width: 100px;
-    margin: 5px 5px 5px 5px;
+    /*margin: 5px 5px 5px 5px;*/
     text-align: left;
     vertical-align: top;
 }
 
 #shopName {
-    border-radius: 2px;
+    /*border-radius: 2px;*/
     margin: 5px 5px 5px 5px;
     width: 300px;
 }
 
 #cityTown {
     margin: 5px 5px 5px 5px;
-    border-radius: 2px;
+    /*border-radius: 2px;*/
     width: 300px;
 }
 
 #districtArea {
     margin: 5px 5px 5px 5px;
-    border-radius: 2px;
+    /*border-radius: 2px;*/
     width: 300px;
 }
 
 #comments {
     margin: 5px 5px 5px 5px;
-    border-radius: 2px;
+    /*border-radius: 2px;*/
     height: 4em;
-    width: 500px;
+    width: 300px;
     word-break: break-word;
 }
 
