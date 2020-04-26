@@ -5,7 +5,7 @@
     "databaseURL": "mongodb://localhost:27017/shameTheGreedyDB2?replicaSet=rs0",
     "verification_timeout": 3600,
     "database": "shameTheGreedyDB2",
-    "maxVotesPerDay": 3,
+    "maxVotesPerDay": 100,
     "mailConfig": {
       "host": "smtp.ethereal.email",
       "port": 587,

@@ -105,6 +105,11 @@ app.get('*', function (req, res, next) {
     next();
 });
 
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    next();
+});
+
 // Home Route
 app.get('/', function (req, res) {
     let sortParams = {voteCount: "descending"};

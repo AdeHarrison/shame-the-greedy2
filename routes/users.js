@@ -43,9 +43,16 @@ router.post('/login', (req, res, next) => {
 router.get('/stats', function (req, res) {
     _getUserVotingStats(req.user._id, gConfig.todaysUTCDate).then(votingStats => {
         let sess = req.session;
+        // sess.votesToday = 456;
 
+        // res.locals.votesToday = votingStats.votesToday;
+        // res.locals.votesRemaining = votingStats.votesRemaining;
         sess.votesToday = votingStats.votesToday;
         sess.votesRemaining = votingStats.votesRemaining;
+        // let passport = req.session.passport;
+        // let user = passport.user;
+        // passport.votesToday = 123;//votingStats.votesToday;
+        // passport.votesRemaining = votingStats.votesRemaining;
 
         res.redirect("/");
     });
@@ -184,7 +191,6 @@ const _verify = async (req, res) => {
     }
 };
 
-
 function processSaveError(err) {
     if (err.message.includes("email_1 dup key")) {
         return {param: "email", msg: "Email address already registered"};
@@ -193,18 +199,6 @@ function processSaveError(err) {
     if (err.message.includes("username_1 dup key")) {
         return {param: "username", msg: "User Name already registered"};
     }
-}
-
-function generateRandomString(string_length) {
-    let random_string = '';
-    let random_ascii;
-    let ascii_low = 65;
-    let ascii_high = 90
-    for (let i = 0; i < string_length; i++) {
-        random_ascii = Math.floor((Math.random() * (ascii_high - ascii_low)) + ascii_low);
-        random_string += String.fromCharCode(random_ascii)
-    }
-    return random_string
 }
 
 const _getUserVotingStats = async (userId, voteDay) => {

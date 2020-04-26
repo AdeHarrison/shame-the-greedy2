@@ -34,7 +34,9 @@ const userSchema = new Schema({
     verified: Boolean,
     verification: String,
     verificationSalt: String,
-    verificationExpiryDate: Date
+    verificationExpiryDate: Date,
+    votesToday:{type:Number, default:0},
+    votesRemaining:{type:Number, default:0}
 });
 
 const User = mongoose.model("User", userSchema);
