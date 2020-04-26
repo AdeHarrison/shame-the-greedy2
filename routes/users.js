@@ -37,15 +37,13 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/stats', function (req, res) {
-    getUserVotingStats(req.user._id, gConfig.todaysUTCDate).then(votingStats => {
+    _getUserVotingStats(req.user._id, gConfig.todaysUTCDate).then(votingStats => {
         let sess = req.session;
 
         sess.votesToday = votingStats.votesToday;
         sess.votesRemaining = votingStats.votesRemaining;
 
         res.redirect("/");
-    }).catch(err => {
-        return console.error(err);
     });
 });
 
@@ -143,6 +141,14 @@ function generateRandomString(string_length) {
         random_string += String.fromCharCode(random_ascii)
     }
     return random_string
+}
+
+const _getUserVotingStats = async (userId, voteDay) => {
+    try {
+        return await getUserVotingStats(userId, voteDay);
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 const getUserVotingStats = async (userId, voteDay) => {
