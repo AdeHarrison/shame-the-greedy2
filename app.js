@@ -23,13 +23,18 @@ mongoose.connect(gConfig.databaseURL, {useNewUrlParser: true, useUnifiedTopology
 
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "Failed to connect to " + gConfig.databaseURL));
+
+
 db.once("open", () => {
     console.log("Successfully connected to " + gConfig.databaseURL);
 
-    User.createCollection();
-    Leech.createCollection();
-    VoteCount.createCollection();
-    Vote.createCollection();
+    if (process.env.NODE_DROP_DB === "true") {
+        db.dropDatabase().then((err) => {
+            configureInitialDatabase()
+        });
+    } else {
+        configureInitialDatabase();
+    }
 });
 
 setupVotingLimits();
@@ -122,6 +127,13 @@ app.use('/leeches', leeches);
 app.listen(3000, function () {
     console.log('Server started on port 3000...');
 });
+
+function configureInitialDatabase() {
+    User.createCollection();
+    Leech.createCollection();
+    VoteCount.createCollection();
+    Vote.createCollection();
+}
 
 function setupVotingLimits() {
     gConfig.todaysUTCDate = serverSideUtils.getUTCDate();

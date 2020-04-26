@@ -31,7 +31,9 @@ const userSchema = new Schema({
         type: String,
         trim: true
     },
-    passwordSalt: String,
+    verified: Boolean,
+    verificationID: String,
+    verificationExpiryDate: Date
 });
 
 const User = mongoose.model("User", userSchema);

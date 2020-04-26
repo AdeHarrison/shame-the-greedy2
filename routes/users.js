@@ -6,6 +6,7 @@ const formUtils = require("../utils/form")
 const User = require('../models/user');
 const VoteCount = require('../models/voteCount');
 const security = require('../utils/security');
+const notification_controller = require("../controllers/notificationController");
 
 // Register Form
 router.get('/register', function (req, res) {
@@ -45,13 +46,20 @@ router.post('/register', function (req, res) {
                 security.generateSalt(10).then(salt => {
 
                     security.hashPassword(req.body.password, salt).then(hash => {
+                        let verificationExpiryDate = new Date();
+                        verificationExpiryDate.setSeconds(verificationExpiryDate.getSeconds() + gConfig.verification_timeout);
+
+                        let verificationID = generateRandomString(50);
 
                         let user = new User({
                             name: req.body.name,
                             email: req.body.email,
                             username: req.body.username,
                             password: hash,
-                            passwordSalt: salt
+                            passwordSalt: salt,
+                            verified: false,
+                            verificationID: verificationID,
+                            verificationExpiryDate: verificationExpiryDate
                         });
 
                         user.save(function (err) {
@@ -63,8 +71,12 @@ router.post('/register', function (req, res) {
                                     errors: errors
                                 });
                             } else {
-                                req.flash('success', 'You are now registered and can log in');
-                                res.redirect('/users/login');
+                                notification_controller.send_verification_email(req, verificationID).then(err => {
+                                    console.log(err);
+                                    req.flash('success', 'You are now registered and can log in');
+                                    res.redirect('/users/login');
+                                })
+
                             }
                         });
                     }).catch(err => {
@@ -126,6 +138,18 @@ function processSaveError(err) {
     if (err.message.includes("username_1 dup key")) {
         return {param: "username", msg: "User Name already registered"};
     }
+}
+
+function generateRandomString(string_length) {
+    let random_string = '';
+    let random_ascii;
+    let ascii_low = 65;
+    let ascii_high = 90
+    for (let i = 0; i < string_length; i++) {
+        random_ascii = Math.floor((Math.random() * (ascii_high - ascii_low)) + ascii_low);
+        random_string += String.fromCharCode(random_ascii)
+    }
+    return random_string
 }
 
 const getUserVotingStats = async (userId, voteDay) => {
