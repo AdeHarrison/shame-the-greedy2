@@ -13,83 +13,9 @@ router.get('/register', function (req, res) {
     res.render('register', {formData: formUtils.createRegisterFormData(req)});
 });
 
-// Register Proccess
+// Register New User Process
 router.post('/register', function (req, res) {
-    try {
-        req.checkBody('name', 'User Name must be 4-20 characters long')
-            .len({min: 4, max: 20})
-
-        req.checkBody('email', "Email address must be valid and 5-30 characters long")
-            .isEmail()
-            .len({min: 5, max: 30});
-
-        req.checkBody('username', 'User Name must be 1-20 alphanumeric characters long')
-            .len({min: 1, max: 20})
-            .isAlphanumeric();
-
-        req.checkBody('password', 'Password must be 8-10 alphanumeric characters long')
-            .len({min: 8, max: 10})
-            .isAlphanumeric();
-
-        req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-
-        req.getValidationResult().then(result => {
-
-            var errors = result.useFirstErrorOnly().array();
-
-            if (errors.length > 0) {
-                res.render('register', {
-                    formData: formUtils.createRegisterFormData(req),
-                    errors: errors
-                });
-            } else {
-                security.generateSalt(10).then(salt => {
-
-                    security.hashPassword(req.body.password, salt).then(hash => {
-                        let verificationExpiryDate = new Date();
-                        verificationExpiryDate.setSeconds(verificationExpiryDate.getSeconds() + gConfig.verification_timeout);
-
-                        let verificationID = generateRandomString(50);
-
-                        let user = new User({
-                            name: req.body.name,
-                            email: req.body.email,
-                            username: req.body.username,
-                            password: hash,
-                            passwordSalt: salt,
-                            verified: false,
-                            verificationID: verificationID,
-                            verificationExpiryDate: verificationExpiryDate
-                        });
-
-                        user.save(function (err) {
-                            if (err) {
-                                errors.push(processSaveError(err));
-
-                                res.render('register', {
-                                    formData: formUtils.createRegisterFormData(req),
-                                    errors: errors
-                                });
-                            } else {
-                                notification_controller.send_verification_email(req, verificationID).then(err => {
-                                    console.log(err);
-                                    req.flash('success', 'You are now registered and can log in');
-                                    res.redirect('/users/login');
-                                })
-
-                            }
-                        });
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                });
-            }
-        });
-    } catch
-        (err) {
-        console.error(err);
-        throw err;
-    }
+    _registerUser(req, res);
 })
 
 router.get('/authenticated', function (req, res) {
@@ -129,6 +55,73 @@ router.get('/logout', function (req, res) {
     req.flash('success', 'You are logged out');
     res.redirect('/users/login');
 });
+
+const _registerUser = async (req, res) => {
+    try {
+        req.checkBody('name', 'User Name must be 4-20 characters long')
+            .len({min: 4, max: 20})
+
+        req.checkBody('email', "Email address must be valid and 5-30 characters long")
+            .isEmail()
+            .len({min: 5, max: 30});
+
+        req.checkBody('username', 'User Name must be 1-20 alphanumeric characters long')
+            .len({min: 1, max: 20})
+            .isAlphanumeric();
+
+        req.checkBody('password', 'Password must be 8-10 alphanumeric characters long')
+            .len({min: 8, max: 10})
+            .isAlphanumeric();
+
+        req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+
+        let result = await req.getValidationResult();
+
+        let errors = result.useFirstErrorOnly().array();
+
+        if (errors.length > 0) {
+            res.render('register', {
+                formData: formUtils.createRegisterFormData(req),
+                errors: errors
+            });
+        } else {
+            let salt = await security.generateSalt(10);
+            let hash = await security.hashPassword(req.body.password, salt);
+            let verificationID = generateRandomString(50);
+            let verificationExpiryDate = new Date();
+
+            verificationExpiryDate.setSeconds(verificationExpiryDate.getSeconds() + gConfig.verification_timeout);
+
+            let user = new User({
+                name: req.body.name,
+                email: req.body.email,
+                username: req.body.username,
+                password: hash,
+                passwordSalt: salt,
+                verified: false,
+                verificationID: verificationID,
+                verificationExpiryDate: verificationExpiryDate
+            });
+
+            await user.save();
+            await notification_controller.sendVerificationEmail(req, verificationID);
+
+            req.flash('success', 'Verification Email has been sent to the registered address');
+            res.redirect('/users/login');
+        }
+    } catch (err) {
+        errors.push(processSaveError(err));
+
+        if (errors.length > 0) {
+            res.render('register', {
+                formData: formUtils.createRegisterFormData(req),
+                errors: errors
+            });
+        } else {
+            console.error(err);
+        }
+    }
+};
 
 function processSaveError(err) {
     if (err.message.includes("email_1 dup key")) {
