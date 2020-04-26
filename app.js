@@ -29,10 +29,13 @@ db.once("open", () => {
     console.log("Successfully connected to " + gConfig.databaseURL);
 
     if (process.env.NODE_DROP_DB === "true") {
+        console.log("Dropping Database");
         db.dropDatabase().then((err) => {
             configureInitialDatabase()
+            console.log("Database Dropped");
         });
     } else {
+        console.log("Keeping Database");
         configureInitialDatabase();
     }
 });

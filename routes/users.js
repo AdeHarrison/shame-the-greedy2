@@ -6,7 +6,7 @@ const formUtils = require("../utils/form")
 const User = require('../models/user');
 const VoteCount = require('../models/voteCount');
 const security = require('../utils/security');
-const notification_controller = require("../controllers/notificationController");
+const notificationController = require("../controllers/notificationController");
 
 // Register Form
 router.get('/register', function (req, res) {
@@ -20,6 +20,10 @@ router.post('/register', function (req, res) {
 
 router.get('/authenticated', function (req, res) {
     res.send(req.isAuthenticated());
+});
+
+router.get('/verify', function (req, res) {
+    _verify(req, res);
 });
 
 // Login Form
@@ -55,6 +59,8 @@ router.get('/logout', function (req, res) {
 });
 
 const _registerUser = async (req, res) => {
+    let errors = [];
+
     try {
         req.checkBody('name', 'User Name must be 4-20 characters long')
             .len({min: 4, max: 20})
@@ -75,7 +81,7 @@ const _registerUser = async (req, res) => {
 
         let result = await req.getValidationResult();
 
-        let errors = result.useFirstErrorOnly().array();
+        errors = result.useFirstErrorOnly().array();
 
         if (errors.length > 0) {
             res.render('register', {
@@ -83,26 +89,29 @@ const _registerUser = async (req, res) => {
                 errors: errors
             });
         } else {
-            let salt = await security.generateSalt(10);
+            let email = req.body.email;
+            let salt = await security.generateBcryptSalt(10);
             let hash = await security.hashPassword(req.body.password, salt);
-            let verificationID = generateRandomString(50);
-            let verificationExpiryDate = new Date();
+            let verificationSalt = security.generateCryptoSalt(16);
+            let verification = security.encryptText(email, verificationSalt).passwordHash;
 
+            let verificationExpiryDate = new Date();
             verificationExpiryDate.setSeconds(verificationExpiryDate.getSeconds() + gConfig.verification_timeout);
 
             let user = new User({
                 name: req.body.name,
-                email: req.body.email,
+                email: email,
                 username: req.body.username,
                 password: hash,
                 passwordSalt: salt,
                 verified: false,
-                verificationID: verificationID,
+                verificationSalt: verificationSalt,
+                verification: verification,
                 verificationExpiryDate: verificationExpiryDate
             });
 
             await user.save();
-            await notification_controller.sendVerificationEmail(req, verificationID);
+            await notificationController.sendVerificationEmail(req, email, verification);
 
             req.flash('success', 'Verification Email has been sent to the registered address');
             res.redirect('/users/login');
@@ -120,6 +129,61 @@ const _registerUser = async (req, res) => {
         }
     }
 };
+
+const _verify = async (req, res) => {
+    try {
+        //todo somehow tie verification to email address
+
+        let actualVerification = req.param("id");
+
+        let user = await User.findOne({verification: actualVerification});
+
+        if (user == null) {
+            req.flash('danger', 'User account not found');
+            return res.redirect('/');
+        }
+
+        if (user.verified) {
+            req.flash('danger', 'User is already verified');
+            return res.redirect('/');
+        }
+
+        // Verification window expired
+        let now = new Date();
+        if (now > user.verificationExpiryDate) {
+            let verification_expiry_date = new Date();
+            verification_expiry_date.setSeconds(verification_expiry_date.getSeconds() + gConfig.verification_timeout);
+            user.verificationExpiryDate = verification_expiry_date;
+
+            user.verificationSalt = security.generateCryptoSalt(16);
+            user.verification = security.encryptText(user.email, user.verificationSalt).passwordHash;
+
+            await user.save();
+            await notificationController.sendVerificationEmail(req, user.email, user.verification);
+
+            req.flash('danger', 'Verification window has expired, new Verification Email sent');
+            return res.redirect('/');
+        } else {
+            let expectedVerification = security.encryptText(user.email, user.verificationSalt).passwordHash;
+
+            if (actualVerification !== expectedVerification) {
+                req.flash('danger', 'Verification email does not match registered account');
+                return res.redirect('/');
+            }
+
+            user.verified = true;
+
+            await user.save();
+
+            req.flash('success', 'User Verified');
+            return res.redirect('/');
+        }
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
 
 function processSaveError(err) {
     if (err.message.includes("email_1 dup key")) {

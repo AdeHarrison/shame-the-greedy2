@@ -32,7 +32,8 @@ const userSchema = new Schema({
         trim: true
     },
     verified: Boolean,
-    verificationID: String,
+    verification: String,
+    verificationSalt: String,
     verificationExpiryDate: Date
 });
 

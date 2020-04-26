@@ -5,8 +5,8 @@ const fs = require("fs");
 
 let smtpTransport = nodemailer.createTransport(gConfig.mailConfig);
 
-exports.sendVerificationEmail = (req, verificationID) => {
-    let link = "http://" + req.get("host") + "/user/verify?id=" + verificationID;
+exports.sendVerificationEmail = (req, email, verification) => {
+    let link = "http://" + req.get("host") + "/users/verify?id=" + verification;
 
     // todo bodge until read pop3 in cypress sorted
     if (process.env.NODE_ENV !== 'prod') {
@@ -20,7 +20,7 @@ exports.sendVerificationEmail = (req, verificationID) => {
     }
 
     let mailOptions = {
-        to: req.body.email,
+        to: email,
         subject: "Please confirm your Email account",
         html: "Hello,<br> Please Click on the link to verify your email (may open in a new Tab).<br><a href=" + link + ">Click here to verify</a>"
     };
