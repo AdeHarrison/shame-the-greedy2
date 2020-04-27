@@ -34,29 +34,29 @@ router.get('/login', function (req, res) {
 // Login Process
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/users/stats',
+        successRedirect: '/',
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next);
 });
 
-router.get('/stats', function (req, res) {
-    _getUserVotingStats(req.user._id, gConfig.todaysUTCDate).then(votingStats => {
-        let sess = req.session;
-        // sess.votesToday = 456;
-
-        // res.locals.votesToday = votingStats.votesToday;
-        // res.locals.votesRemaining = votingStats.votesRemaining;
-        sess.votesToday = votingStats.votesToday;
-        sess.votesRemaining = votingStats.votesRemaining;
-        // let passport = req.session.passport;
-        // let user = passport.user;
-        // passport.votesToday = 123;//votingStats.votesToday;
-        // passport.votesRemaining = votingStats.votesRemaining;
-
-        res.redirect("/");
-    });
-});
+// router.get('/stats', function (req, res) {
+`//     _getUserVotingStats(req.user._id, gConfig.todaysUTCDate).then(votingStats => {
+`//         let sess = req.session;
+//         // sess.votesToday = 456;
+//
+//         // res.locals.votesToday = votingStats.votesToday;
+//         // res.locals.votesRemaining = votingStats.votesRemaining;
+//         sess.votesToday = votingStats.votesToday;
+//         sess.votesRemaining = votingStats.votesRemaining;
+//         // let passport = req.session.passport;
+//         // let user = passport.user;
+//         // passport.votesToday = 123;//votingStats.votesToday;
+//         // passport.votesRemaining = votingStats.votesRemaining;
+//
+//         res.redirect("/");
+//     });
+// });
 
 // logout
 router.get('/logout', function (req, res) {
@@ -201,29 +201,29 @@ function processSaveError(err) {
     }
 }
 
-const _getUserVotingStats = async (userId, voteDay) => {
-    try {
-        return await getUserVotingStats(userId, voteDay);
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-const getUserVotingStats = async (userId, voteDay) => {
-    let searchParams = {userId: userId, voteDay: voteDay};
-
-    let voteCount = await VoteCount.findOne(searchParams);
-
-    if (!voteCount) {
-        voteCount = await VoteCount.create(searchParams);
-    }
-
-    let votingStats = {
-        votesToday: voteCount.voteDayCount.toString(),
-        votesRemaining: (gConfig.maxVotesPerDay - voteCount.voteDayCount).toString()
-    };
-
-    return votingStats;
-};
+// const _getUserVotingStats = async (userId, voteDay) => {
+//     try {
+//         return await getUserVotingStats(userId, voteDay);
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
+//
+// const getUserVotingStats = async (userId, voteDay) => {
+//     let searchParams = {userId: userId, voteDay: voteDay};
+//
+//     let voteCount = await VoteCount.findOne(searchParams);
+//
+//     if (!voteCount) {
+//         voteCount = await VoteCount.create(searchParams);
+//     }
+//
+//     let votingStats = {
+//         votesToday: voteCount.voteDayCount.toString(),
+//         votesRemaining: (gConfig.maxVotesPerDay - voteCount.voteDayCount).toString()
+//     };
+//
+//     return votingStats;
+// };
 
 module.exports = router;
