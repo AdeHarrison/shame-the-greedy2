@@ -10,8 +10,6 @@ const config = require('./config/config.js');
 const schedule = require('node-schedule');
 const serverSideUtils = require('./utils/server-side-utils');
 
-// const users = require('./routes/users');
-
 const User = require('./models/user');
 const Leech = require("./models/leech");
 const VoteCount = require("./models/voteCount");
@@ -25,8 +23,6 @@ mongoose.connect(gConfig.databaseURL, {useNewUrlParser: true, useUnifiedTopology
 
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "Failed to connect to " + gConfig.databaseURL));
-
-
 db.once("open", () => {
     console.log("Successfully connected to " + gConfig.databaseURL);
 
@@ -113,9 +109,11 @@ app.use(function (req, res, next) {
 });
 
 // Route Files
+let index = require('./routes/index');
 let articles = require('./routes/articles');
 let users = require('./routes/users');
 let leeches = require('./routes/leeches');
+app.use('/', index);
 app.use('/articles', articles);
 app.use('/users', users);
 app.use('/leeches', leeches);
@@ -125,24 +123,6 @@ app.get('/', function (req, res) {
     _refresh_home_page(req, res);
 });
 
-const _refresh_home_page = async (req, res) => {
-    try {
-        if (req.isAuthenticated()) {
-            let votingStats = await _getUserVotingStats(req.user._id, gConfig.todaysUTCDate);
-            let sess = req.session;
-
-            sess.votesToday = votingStats.votesToday;
-            sess.votesRemaining = votingStats.votesRemaining;
-        }
-
-        let sortParams = {voteCount: "descending"};
-        let leeches = await Leech.find({}).sort(sortParams).exec();
-
-        res.render("index", formUtils.createIndexParams(req, leeches));
-    } catch (err) {
-        console.error(err);
-    }
-}
 
 // Start Server
 app.listen(3000, function () {
@@ -164,27 +144,3 @@ function setupVotingLimits() {
     });
 }
 
-const _getUserVotingStats = async (userId, voteDay) => {
-    try {
-        return await getUserVotingStats(userId, voteDay);
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-const getUserVotingStats = async (userId, voteDay) => {
-    let searchParams = {userId: userId, voteDay: voteDay};
-
-    let voteCount = await VoteCount.findOne(searchParams);
-
-    if (!voteCount) {
-        voteCount = await VoteCount.create(searchParams);
-    }
-
-    let votingStats = {
-        votesToday: voteCount.voteDayCount.toString(),
-        votesRemaining: (gConfig.maxVotesPerDay - voteCount.voteDayCount).toString()
-    };
-
-    return votingStats;
-};
