@@ -40,24 +40,6 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-// router.get('/stats', function (req, res) {
-`//     _getUserVotingStats(req.user._id, gConfig.todaysUTCDate).then(votingStats => {
-`//         let sess = req.session;
-//         // sess.votesToday = 456;
-//
-//         // res.locals.votesToday = votingStats.votesToday;
-//         // res.locals.votesRemaining = votingStats.votesRemaining;
-//         sess.votesToday = votingStats.votesToday;
-//         sess.votesRemaining = votingStats.votesRemaining;
-//         // let passport = req.session.passport;
-//         // let user = passport.user;
-//         // passport.votesToday = 123;//votingStats.votesToday;
-//         // passport.votesRemaining = votingStats.votesRemaining;
-//
-//         res.redirect("/");
-//     });
-// });
-
 // logout
 router.get('/logout', function (req, res) {
     req.logout();
@@ -121,6 +103,7 @@ const _registerUser = async (req, res) => {
             await notificationController.sendVerificationEmail(req, email, verification);
 
             req.flash('success', 'Verification Email has been sent to the registered address');
+
             res.redirect('/users/login');
         }
     } catch (err) {
@@ -200,30 +183,5 @@ function processSaveError(err) {
         return {param: "username", msg: "User Name already registered"};
     }
 }
-
-// const _getUserVotingStats = async (userId, voteDay) => {
-//     try {
-//         return await getUserVotingStats(userId, voteDay);
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
-//
-// const getUserVotingStats = async (userId, voteDay) => {
-//     let searchParams = {userId: userId, voteDay: voteDay};
-//
-//     let voteCount = await VoteCount.findOne(searchParams);
-//
-//     if (!voteCount) {
-//         voteCount = await VoteCount.create(searchParams);
-//     }
-//
-//     let votingStats = {
-//         votesToday: voteCount.voteDayCount.toString(),
-//         votesRemaining: (gConfig.maxVotesPerDay - voteCount.voteDayCount).toString()
-//     };
-//
-//     return votingStats;
-// };
 
 module.exports = router;

@@ -9,6 +9,7 @@ const formUtils = require("./utils/form")
 const config = require('./config/config.js');
 const schedule = require('node-schedule');
 const serverSideUtils = require('./utils/server-side-utils');
+var cookieParser = require('cookie-parser');
 
 const User = require('./models/user');
 const Leech = require("./models/leech");
@@ -56,6 +57,9 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({extended: false}));
 // parse application/json
 app.use(bodyParser.json());
+
+// Cookie parser
+app.use(cookieParser());
 
 // Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')));
