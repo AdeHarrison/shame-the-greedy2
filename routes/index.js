@@ -36,11 +36,28 @@ const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
         let sortParams = {};
         sortParams[orderBy] = orderDirection;
 
-        let leeches = await Leech.find({}).sort(sortParams).exec();
+        const options = {
+            page: 1,
+            limit: 2,
+            sort: sortParams,
+            collation: {
+                locale: 'en'
+            }
+        };
 
-        res.cookie('orderBy', orderBy)
-            .cookie('orderDirection', orderDirection)
-            .render("index", formUtils.createIndexParams(req, leeches));
+        Leech.paginate({}, options, function (err, result){
+            // let leeches = await Leech.find({}).sort(sortParams).exec();
+
+            res.cookie('orderBy', orderBy)
+                .cookie('orderDirection', orderDirection)
+                .render("index", formUtils.createIndexParams(req, result.docs));
+
+        });
+        // let leeches = await Leech.find({}).sort(sortParams).exec();
+        //
+        // res.cookie('orderBy', orderBy)
+        //     .cookie('orderDirection', orderDirection)
+        //     .render("index", formUtils.createIndexParams(req, leeches));
     } catch (err) {
         console.error(err);
     }

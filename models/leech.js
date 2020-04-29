@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -39,6 +40,9 @@ const leechSchema = new Schema({
     },
     userId: String
 });
+
+leechSchema.plugin(mongoosePaginate);
+
 //todo compound index here on 1st 3 fields
 const Leech = mongoose.model("Leech", leechSchema);
 
