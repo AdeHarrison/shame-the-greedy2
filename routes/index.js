@@ -9,6 +9,8 @@ router.get('/', function (req, res) {
     let orderBy = req.cookies.orderBy ? req.cookies.orderBy : "voteCount";
     let orderDirection = req.cookies.orderDirection ? req.cookies.orderDirection : "descending";
 
+    req.session.orderTitle = setOrderTitle(orderBy, orderDirection);
+
     _refresh_home_page(req, res, orderBy, orderDirection);
 });
 
@@ -70,12 +72,12 @@ const getUserVotingStats = async (userId, voteDay) => {
 };
 
 function setOrderTitle(orderBy, orderDirection) {
-    if(!orderBy) {
+    if (!orderBy) {
         return "Order The Greedy By...";
     }
 
+    let orderedBy = "The Greedy Ordered By ";
     let orderedDirection = orderDirection === "ascending" ? " Ascending" : " Descending";
-    let orderedBy = "Greedy Ordered By ";
 
     if (orderBy === "voteCount") {
         orderedBy += "Vote Count";
