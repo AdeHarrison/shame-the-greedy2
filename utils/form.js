@@ -68,10 +68,10 @@ const createUploadFormData = (req) => {
         };
     } else {
         return {
-            shopName: "30UPPERCASECHARSXXXXXXXXXXXXXX",
-            cityTown: "30UPPERCASECHARSXXXXXXXXXXXXXX",
-            districtArea: "30UPPERCASECHARSXXXXXXXXXXXXXX",
-            comments: "100UPPERCASECHARSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            shopName: "Malik's Supermarket",
+            cityTown: "Bristol",
+            districtArea: "St Pauls",
+            comments: "claimed 'operator error' when massivley over-pricing",
             useStockPhoto: true
         };
     }

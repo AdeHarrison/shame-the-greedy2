@@ -23,11 +23,6 @@ html
                                 a(href="/leeches/upload" id="upload") Upload
                     ul.nav.navbar-nav.navbar-right
                         if user
-                            a Votes Cast Today
-                            a(id="votesToday") #{session.votesToday}
-                            a Votes Remaining
-                            a(id="votesRemainingToday") #{session.votesRemaining}
-                            a Logged in as '#{user.username}'
                             li
                                 a(href='/users/logout') Logout
                         else

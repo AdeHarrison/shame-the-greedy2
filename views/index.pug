@@ -3,25 +3,38 @@ extends layout
 block content
 
     h1 #{title}
-    ul.list-group
-        each leech in leeches
-            li.list-group-item
-                div.vote
-                    div.voting
-                        | Votes of Shame : &nbsp&nbsp
-                        a(id="leechVotes-" + leech._id) #{leech.voteCount}
-                        //if votesRemaining > 0
-                        a.btn.btn-primary(id="idUp-" + leech._id onclick="voteUp(\"" + leech._id + "\")" href="#") +
-                    div.image(style=`background: url("${leech.photoLocation}") top center no-repeat; background-size: cover;`)
-                div.detail
-                    label#asd(for="shopName") Shop Name:
-                    input#shopName(type="text" value=leech.shopName readonly)
-                div.detail
-                    label(for="cityTown") City/Town:
-                    input#cityTown(type="text" value=leech.cityTown readonly)
-                div.detail
-                    label(for="districtArea") District/Area:
-                    input#districtArea(type="text" value=leech.districtArea readonly)
-                div.detail
-                    label Comments:
-                    textarea#comments(type="textarea" readonly) #{leech.comments}
+        .row
+            .col-sm-2.h5
+                if user
+                    a Logged in as '#{user.username}'
+                    br
+                    a Votes Cast Today
+                    a(id="votesToday") #{session.votesToday}
+                    br
+                    a Votes Remaining
+                    a(id="votesRemainingToday") #{session.votesRemaining}
+            .col-sm-10.h4
+                each leech in leeches
+                    .col-sm-4
+                        .panel.panel-default
+                            .panel-heading
+                                | Votes of Shame : &nbsp&nbsp
+                                a(id="leechVotes-" + leech._id) #{leech.voteCount}
+                                if session.votesRemaining > 0
+                                    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    a.btn.btn-primary(id="idUp-" + leech._id onclick="voteUp(\"" + leech._id + "\")" href="#") +
+                            .panel-body.h
+                                div.image(style=`background: url("${leech.photoLocation}") top center no-repeat; background-size: cover;`)
+                                div.details.h5
+                                    .detail
+                                        label Shop Name:
+                                        input(type="text" value=leech.shopName readonly)
+                                    div.detail
+                                        label City/Town:
+                                        input(type="text" value=leech.cityTown readonly)
+                                    div.detail
+                                        label District/Area:
+                                        input(type="text" value=leech.districtArea readonly)
+                                    div.detail
+                                        label Comments:
+                                        textarea#comments(type="textarea" readonly) #{leech.comments}
