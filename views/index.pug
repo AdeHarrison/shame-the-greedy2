@@ -1,24 +1,25 @@
 extends layout
 
 block content
-    .dropdown
-        a(href="#", data-toggle="dropdown").dropdown-toggle Order By
-        ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu')
-            li
-                a(href='/order?by=voteCount&direction=ascending', tabindex='-1') Vote Count Ascending
-                a(href='/order?by=voteCount&direction=descending', tabindex='-1') Vote Count Descending (default)
-            li.divider
-            li
-                a(href='/order?by=shopName&direction=ascending', tabindex='-1') Shop Name Ascending
-                a(href='/order?by=shopName&direction=descending', tabindex='-1') Shop Name Descending
-            li.divider
-            li
-                a(href='/order?by=cityTown&direction=ascending', tabindex='-1') City/Town Ascending
-                a(href='/order?by=cityTown&direction=descending', tabindex='-1') CityTown Descending
-            li.divider
-            li
-                a(href='/order?by=districtArea&direction=ascending', tabindex='-1') District/Area Ascending
-                a(href='/order?by=districtArea&direction=descending', tabindex='-1') District/Area Descending
+    if leeches.length > 0
+        .dropdown
+            .btn.btn-info(href="#", data-toggle="dropdown").dropdown-toggle #{session.orderTitle}
+            ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu')
+                li
+                    a(href='/order?by=voteCount&direction=ascending', tabindex='-1') Vote Count Ascending
+                    a(href='/order?by=voteCount&direction=descending', tabindex='-1') Vote Count Descending (default)
+                li.divider
+                li
+                    a(href='/order?by=shopName&direction=ascending', tabindex='-1') Shop Name Ascending
+                    a(href='/order?by=shopName&direction=descending', tabindex='-1') Shop Name Descending
+                li.divider
+                li
+                    a(href='/order?by=cityTown&direction=ascending', tabindex='-1') City/Town Ascending
+                    a(href='/order?by=cityTown&direction=descending', tabindex='-1') CityTown Descending
+                li.divider
+                li
+                    a(href='/order?by=districtArea&direction=ascending', tabindex='-1') District/Area Ascending
+                    a(href='/order?by=districtArea&direction=descending', tabindex='-1') District/Area Descending
     h1 #{title}
         .row
             .col-sm-2.h5

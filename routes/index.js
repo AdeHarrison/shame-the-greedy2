@@ -13,10 +13,12 @@ router.get('/', function (req, res) {
 });
 
 router.get('/order', function (req, res) {
-    let sortBy = req.query.by;
-    let sortDirection = req.query.direction;
+    let orderBy = req.query.by;
+    let orderDirection = req.query.direction;
 
-    _refresh_home_page(req, res, sortBy, sortDirection);
+    req.session.orderTitle = setOrderTitle(orderBy, orderDirection);
+
+    _refresh_home_page(req, res, orderBy, orderDirection);
 });
 
 const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
@@ -66,5 +68,27 @@ const getUserVotingStats = async (userId, voteDay) => {
 
     return votingStats;
 };
+
+function setOrderTitle(orderBy, orderDirection) {
+    if(!orderBy) {
+        return "Order The Greedy By...";
+    }
+
+    let orderedDirection = orderDirection === "ascending" ? " Ascending" : " Descending";
+    let orderedBy = "Greedy Ordered By ";
+
+    if (orderBy === "voteCount") {
+        orderedBy += "Vote Count";
+    } else if (orderBy === "shopName") {
+        orderedBy += "Shop Name";
+    } else if (orderBy === "cityTown") {
+        orderedBy += "City/Town";
+    } else if (orderBy === "districtArea") {
+        orderedBy += "District/Area";
+    }
+
+    return orderedBy + orderedDirection;
+}
+
 
 module.exports = router;
