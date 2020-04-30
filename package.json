@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app",
+    "cy:run": "cypress run",
     "cypress:open": "cypress open",
     "db:reset": "mongo --host rs0/localhost:27017 shameTheGreedyDB --eval \"db.dropDatabase()\"",
     "db:createUniqueEmailIndex": "mongo --host rs0/localhost:27017 shameTheGreedyDB --eval \"db.users.createIndex({email:1}, {unique:true})\"",
