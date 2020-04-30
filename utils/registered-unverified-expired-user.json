@@ -3,7 +3,7 @@
   "email": "irving.beer77@ethereal.email",
   "username": "bcfcharry",
   "password": "$2a$10$Y6.e8xS8YREq7ZyhaXy/xu06H8zTf57iv4meCTNz1KzZWXx/qrv06",
-  "verified": true,
+  "verified": false,
   "verificationSalt": "fe6bb4e5255b77d7",
   "verification": "5688b9c93752e1bba583975a72ce1f53af0af9e5cc257f90f62f88341607ba365ef82ae64dae894a8a4dd025c69b926487cef49861083f9b086c61e58aa697bb",
   "verificationExpiryDate": "2019-04-30T10:27:45.750Z"

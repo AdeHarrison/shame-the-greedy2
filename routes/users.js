@@ -120,7 +120,7 @@ const _verify = async (req, res) => {
     try {
         //todo somehow tie verification to email address
 
-        let actualVerification = req.param("id");
+        let actualVerification = req.query.id;
 
         let user = await User.findOne({verification: actualVerification});
 
