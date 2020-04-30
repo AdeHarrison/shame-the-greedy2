@@ -110,12 +110,12 @@ app.use(function (req, res, next) {
 });
 
 // Route Files
-let index = require('./routes/index');
-let users = require('./routes/users');
-let leeches = require('./routes/leeches');
-app.use('/', index);
-app.use('/users', users);
-app.use('/leeches', leeches);
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+let leechesRouter = require('./routes/leeches');
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/leeches', leechesRouter);
 
 // Home Route
 app.get('/', function (req, res) {
