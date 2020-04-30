@@ -45,19 +45,19 @@ const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
             }
         };
 
-        Leech.paginate({}, options, function (err, result){
-            // let leeches = await Leech.find({}).sort(sortParams).exec();
-
-            res.cookie('orderBy', orderBy)
-                .cookie('orderDirection', orderDirection)
-                .render("index", formUtils.createIndexParams(req, result.docs));
-
-        });
-        // let leeches = await Leech.find({}).sort(sortParams).exec();
+        // Leech.paginate({}, options, function (err, result){
+        //     // let leeches = await Leech.find({}).sort(sortParams).exec();
         //
-        // res.cookie('orderBy', orderBy)
-        //     .cookie('orderDirection', orderDirection)
-        //     .render("index", formUtils.createIndexParams(req, leeches));
+        //     res.cookie('orderBy', orderBy)
+        //         .cookie('orderDirection', orderDirection)
+        //         .render("index", formUtils.createIndexParams(req, result.docs));
+        //
+        // });
+        let leeches = await Leech.find({}).sort(sortParams).exec();
+
+        res.cookie('orderBy', orderBy)
+            .cookie('orderDirection', orderDirection)
+            .render("index", formUtils.createIndexParams(req, leeches));
     } catch (err) {
         console.error(err);
     }
