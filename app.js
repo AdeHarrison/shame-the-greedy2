@@ -45,9 +45,6 @@ setupVotingLimits();
 const app = express();
 // app.use("/user", userRouter);
 
-// Bring in Models
-let Article = require('./models/article');
-
 // Load View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -114,11 +111,9 @@ app.use(function (req, res, next) {
 
 // Route Files
 let index = require('./routes/index');
-let articles = require('./routes/articles');
 let users = require('./routes/users');
 let leeches = require('./routes/leeches');
 app.use('/', index);
-app.use('/articles', articles);
 app.use('/users', users);
 app.use('/leeches', leeches);
 

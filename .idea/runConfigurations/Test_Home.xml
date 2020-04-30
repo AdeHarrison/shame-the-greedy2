@@ -9,8 +9,8 @@
     <option name="workingDirectory" value="$PROJECT_DIR$" />
     <option name="textRange" />
     <option name="allNames" />
-    <option name="specsDir" value="$PROJECT_DIR$/cypress/integration/home.spec.js" />
-    <option name="specFile" value="" />
+    <option name="specsDir" />
+    <option name="specFile" value="$PROJECT_DIR$/cypress/integration/home.spec.js" />
     <option name="testName" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />
     <option name="envs">
@@ -20,7 +20,7 @@
     <option name="passParentEnvs" value="true" />
     <option name="nodeJsRef" value="project" />
     <option name="npmRef" value="Project" />
-    <option name="kind" value="DIRECTORY" />
+    <option name="kind" value="SPEC" />
     <option name="interactive" value="false" />
     <method v="2" />
   </configuration>
