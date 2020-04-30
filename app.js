@@ -11,10 +11,10 @@ const schedule = require('node-schedule');
 const serverSideUtils = require('./utils/server-side-utils');
 var cookieParser = require('cookie-parser');
 
-const User = require('./models/user');
-const Leech = require("./models/leech");
-const VoteCount = require("./models/voteCount");
-const Vote = require("./models/vote");
+const User = require('./models/users/user');
+const Leech = require("./models/leeches/leech");
+const VoteCount = require("./models/leeches/voteCount");
+const Vote = require("./models/leeches/vote");
 
 // Mongoose
 mongoose.set("useNewUrlParser", true);

@@ -4,14 +4,14 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const formUtils = require("../utils/form")
-const User = require('../models/user');
+const User = require('../models/users/user');
 const security = require('../utils/security');
 const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
-const VoteCount = require("../models/voteCount");
-const Leech = require("../models/leech");
-const Vote = require("../models/vote");
+const VoteCount = require("../models/leeches/voteCount");
+const Leech = require("../models/leeches/leech");
+const Vote = require("../models/leeches/vote");
 
 const uploadDirectory = multer({dest: "public/images/uploads"});
 
@@ -29,7 +29,7 @@ router.get("/*", function (req, res, next) {
 
 // Upload Form
 router.get('/upload', function (req, res) {
-    res.render('upload', {formData: formUtils.createUploadFormData(req)});
+    res.render('leeches/upload', {formData: formUtils.createUploadFormData(req)});
 });
 
 // Upload Process

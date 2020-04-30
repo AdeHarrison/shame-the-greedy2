@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Leech = require("../models/leech");
+const Leech = require("../models/leeches/leech");
 const formUtils = require("../utils/form")
-const VoteCount = require("../models/voteCount");
+const VoteCount = require("../models/leeches/voteCount");
 const serverSideUtils = require('../utils/server-side-utils');
 
 router.get('/', function (req, res) {

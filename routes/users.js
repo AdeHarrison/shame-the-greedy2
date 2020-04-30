@@ -3,14 +3,14 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const formUtils = require("../utils/form")
-const User = require('../models/user');
-const VoteCount = require('../models/voteCount');
+const User = require('../models/users/user');
+const VoteCount = require('../models/leeches/voteCount');
 const security = require('../utils/security');
 const notificationController = require("../controllers/notificationController");
 
 // Register Form
 router.get('/register', function (req, res) {
-    res.render('register', {formData: formUtils.createRegisterFormData(req)});
+    res.render('users/register', {formData: formUtils.createRegisterFormData(req)});
 });
 
 // Register New User Process
@@ -28,7 +28,7 @@ router.get('/verify', function (req, res) {
 
 // Login Form
 router.get('/login', function (req, res) {
-    res.render('login', {formData: formUtils.createLoginFormData(req)});
+    res.render('users/login', {formData: formUtils.createLoginFormData(req)});
 });
 
 // Login Process
@@ -70,7 +70,7 @@ const _registerUser = async (req, res) => {
         errors = result.useFirstErrorOnly().array();
 
         if (errors.length > 0) {
-            res.render('register', {
+            res.render('users/register', {
                 formData: formUtils.createRegisterFormData(req),
                 errors: errors
             });
@@ -106,7 +106,7 @@ const _registerUser = async (req, res) => {
         errors.push(processSaveError(err));
 
         if (errors.length > 0) {
-            res.render('register', {
+            res.render('users/register', {
                 formData: formUtils.createRegisterFormData(req),
                 errors: errors
             });
