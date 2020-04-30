@@ -2,7 +2,7 @@ as administrator
 ---------------
 create rs0 directory
 mongod --port 27017 --dbpath "/Program Files/MongoDB/Server/4.2/data/rs0" --replSet rs0 --bind_ip localhost
-mongo shameTheGreedyDB2
+mongo shameTheGreedyDB
 rs.initiate()
 
 windows
@@ -14,7 +14,7 @@ linux
 -----
 create mongodb-rs0 directory
 sudo systemctl stop mongodb && sudo mongod --port 27017 --dbpath /var/lib/mongodb-rs0 --replSet rs0
-mongo shameTheGreedyDB2
+mongo shameTheGreedyDB
 rs.initiate()
 
-"databaseURL": "mongodb://localhost:27017/shameTheGreedyDB2?replicaSet=rs0",
+"databaseURL": "mongodb://localhost:27017/shameTheGreedyDB?replicaSet=rs0",

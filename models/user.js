@@ -7,10 +7,11 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
 const userSchema = new Schema({
-    name: {
+    username: {
         type: String,
         trim: true,
-        uppercase: true,
+        lowercase: true,
+        unique: true,
         required: true
     },
     email: {
@@ -18,13 +19,6 @@ const userSchema = new Schema({
         trim: true,
         unique: true,
         lowercase: true,
-        required: true
-    },
-    username: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        unique: true,
         required: true
     },
     password: {
@@ -35,8 +29,6 @@ const userSchema = new Schema({
     verification: String,
     verificationSalt: String,
     verificationExpiryDate: Date,
-    votesToday:{type:Number, default:0},
-    votesRemaining:{type:Number, default:0}
 });
 
 const User = mongoose.model("User", userSchema);

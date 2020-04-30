@@ -5,14 +5,11 @@ block content
     div.container
         form(method="POST" action="/users/register")
             div.form-group
-                label(for="name") Name:
-                input#name.form-control(type="text" name="name" value=formData.name)
+                label(for="username") User Name:
+                input#username.form-control(type="text" name="username" value=formData.username)
             div.form-group
                 label(for="email") Email:
                 input#email.form-control(type="email" name="email" value=formData.email)
-            div.form-group
-                label(for="username") User Name:
-                input#username.form-control(type="text" name="username" value=formData.username)
             div.form-group
                 label(for="password") Password:
                 input#password.form-control(type="password" name="password" value=formData.password )

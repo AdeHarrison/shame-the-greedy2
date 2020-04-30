@@ -2,9 +2,9 @@
   "development": {
     "config_id": "development",
     "node_port": 7000,
-    "databaseURL": "mongodb://localhost:27017/shameTheGreedyDB2?replicaSet=rs0",
+    "databaseURL": "mongodb://localhost:27017/shameTheGreedyDB?replicaSet=rs0",
     "verification_timeout": 3600,
-    "database": "shameTheGreedyDB2",
+    "database": "shameTheGreedyDB",
     "maxVotesPerDay": 100,
     "mailConfig": {
       "host": "smtp.ethereal.email",

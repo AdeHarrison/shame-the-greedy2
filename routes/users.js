@@ -51,16 +51,13 @@ const _registerUser = async (req, res) => {
     let errors = [];
 
     try {
-        req.checkBody('name', 'User Name must be 4-20 characters long')
-            .len({min: 4, max: 20})
+        req.checkBody('username', 'User Name must be 1-20 alphanumeric characters long')
+            .len({min: 1, max: 20})
+            .isAlphanumeric();
 
         req.checkBody('email', "Email address must be valid and 5-30 characters long")
             .isEmail()
             .len({min: 5, max: 30});
-
-        req.checkBody('username', 'User Name must be 1-20 alphanumeric characters long')
-            .len({min: 1, max: 20})
-            .isAlphanumeric();
 
         req.checkBody('password', 'Password must be 8-10 alphanumeric characters long')
             .len({min: 8, max: 10})

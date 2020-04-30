@@ -17,19 +17,19 @@ html
                 #navbar.collapse.navbar-collapse
                     ul.nav.navbar-nav
                         li
-                            a(href='/') Home
+                            a(id="home" href='/') Home
                         if user
                             li
-                                a(href="/leeches/upload" id="upload") Upload
+                                a(id="upload" href="/leeches/upload") Upload
                     ul.nav.navbar-nav.navbar-right
                         if user
                             li
-                                a(href='/users/logout') Logout
+                                a(id="logout" href='/users/logout') Logout
                         else
                             li
-                                a(href='/users/register') Register
+                                a(id="register" href='/users/register') Register
                             li
-                                a(href='/users/login') Login
+                                a(id="login" href='/users/login') Login
         .container
             != messages('message', locals)
             if errors
