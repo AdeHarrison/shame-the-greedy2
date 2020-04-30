@@ -5,7 +5,6 @@ function createIndexParams(req, leeches) {
 const createRegisterFormData = (req) => {
     if ("name" in req.body) {
         return {
-            name: req.body.name,
             email: req.body.email,
             username: req.body.username,
             password: req.body.password,
@@ -13,7 +12,6 @@ const createRegisterFormData = (req) => {
         };
     } else if (process.env.NODE_ENV !== "development") {
         return {
-            name: "",
             email: "",
             username: "",
             password: "",
@@ -21,7 +19,6 @@ const createRegisterFormData = (req) => {
         };
     } else {
         return {
-            name: "harry",
             email: "irving.beer77@ethereal.email",
             username: "bcfcharry",
             password: "6srcxq2X4c",

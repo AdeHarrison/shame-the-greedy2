@@ -1,12 +1,10 @@
 {
+  "name": "HARRY",
   "email": "irving.beer77@ethereal.email",
-  "password": "a33fba30d67e8ba6e57eb8e9db6fa015f38c64ead4282e724cfacdc7a846135ff3f308f43c4edb9d32b783d9bf16b700d827635ba73ed853e3bc4d1bc22dbfeb",
-  "passwordSalt": "384a5b10a6e0f502",
-  "username": "HARRY",
-  "verification": "fbf31c1df31586c336498cbfa430da9a8ec7fd793f0a2b688cebf21602dc66cfa16e934ff53543960e3b81498aed99b9f5bc2e558fddd81f0e832c8b4ce87289",
-  "verificationExpiryDate": {
-    "$date": "2019-04-12T14:06:41.149Z"
-  },
-  "verificationSalt": "cb00fa0ac542af2b",
-  "verified": false
+  "username": "bcfcharry",
+  "password": "$2a$10$Y6.e8xS8YREq7ZyhaXy/xu06H8zTf57iv4meCTNz1KzZWXx/qrv06",
+  "verified": true,
+  "verificationSalt": "fe6bb4e5255b77d7",
+  "verification": "5688b9c93752e1bba583975a72ce1f53af0af9e5cc257f90f62f88341607ba365ef82ae64dae894a8a4dd025c69b926487cef49861083f9b086c61e58aa697bb",
+  "verificationExpiryDate": "2019-04-30T10:27:45.750Z"
 }
