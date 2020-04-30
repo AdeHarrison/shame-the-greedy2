@@ -100,7 +100,6 @@ const _registerUser = async (req, res) => {
             await notificationController.sendVerificationEmail(req, email, verification);
 
             req.flash('success', 'Verification Email has been sent to the registered address');
-
             res.redirect('/users/login');
         }
     } catch (err) {

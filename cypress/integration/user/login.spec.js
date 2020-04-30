@@ -4,7 +4,7 @@ describe("login", () => {
         cy.visit("http://localhost:7000");
     });
 
-    it("Successful user login", () => {
+    it.only("Successful user login", () => {
         cy.get("@login")
             .then((login) => {
                 cy.exec('npm run db:reset && npm run db:insert-verified-user');
@@ -18,10 +18,10 @@ describe("login", () => {
 
                 cy.get("[id='login']").click();
 
-                cy.get("[id='email']")
+                cy.get("[id='username']")
                     .clear()
-                    .type(login.validEmail)
-                    .should("have.value", login.validEmail);
+                    .type(login.validUserName)
+                    .should("have.value", login.validUserName);
 
                 cy.get("[id='password']")
                     .clear()
@@ -30,7 +30,7 @@ describe("login", () => {
 
                 cy.get("form").submit();
 
-                cy.contains("Logged in as 'HARRY'");
+                cy.contains("Hi 'bcfcharry'");
 
                 // Links available when authenticated
                 cy.get("[id='home']").should("exist");
