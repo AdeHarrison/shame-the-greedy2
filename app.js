@@ -5,11 +5,10 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const passport = require('passport');
-const formUtils = require("./utils/form")
 const config = require('./config/config.js');
 const schedule = require('node-schedule');
 const serverSideUtils = require('./utils/server-side-utils');
-var cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 
 const User = require('./models/users/user');
 const Leech = require("./models/leeches/leech");
@@ -29,7 +28,7 @@ db.once("open", () => {
 
     if (process.env.NODE_DROP_DB === "true") {
         console.log("Dropping Database");
-        db.dropDatabase().then((err) => {
+        db.dropDatabase().then(() => {
             configureInitialDatabase()
             console.log("Database Dropped");
         });
@@ -78,7 +77,7 @@ app.use(function (req, res, next) {
 // Express Validator Middleware
 app.use(expressValidator({
     errorFormatter: function (param, msg, value) {
-        var namespace = param.split('.')
+        let namespace = param.split('.')
             , root = namespace.shift()
             , formParam = root;
 
@@ -119,7 +118,7 @@ app.use('/leeches', leechesRouter);
 
 // Home Route
 app.get('/', function (req, res) {
-    _refresh_home_page(req, res);
+    return _refresh_home_page(req, res);
 });
 
 

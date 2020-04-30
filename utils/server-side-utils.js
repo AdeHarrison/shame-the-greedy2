@@ -23,7 +23,7 @@ function getUTCDate() {
 }
 
 function lpad(strIn, padString, length) {
-    var strOut = strIn;
+    let strOut = strIn;
 
     while (strOut.length < length) {
         strOut = padString + strOut;

@@ -7,19 +7,19 @@ const User = require('../models/users/user');
 
 const notificationController = require("../controllers/notificationController");
 
-exports.register_get = (req, res, messages) => {
+exports.register_get = (req, res) => {
     res.render('users/register', {formData: formUtils.createRegisterFormData(req)});
 };
 
 exports.register_post = (req, res) => {
-    _registerUser(req, res);
+    return _registerUser(req, res);
 };
 
 exports.verify_get = (req, res) => {
-    _verify(req, res);
+    return _verify(req, res);
 };
 
-exports.login_get = (req, res, messages) => {
+exports.login_get = (req, res) => {
     res.render('users/login', {formData: formUtils.createLoginFormData(req)});
 };
 

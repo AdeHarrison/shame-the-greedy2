@@ -1,28 +1,25 @@
 "use strict";
 
-const express = require('express');
-const router = express.Router();
 const Leech = require("../models/leeches/leech");
 const formUtils = require("../utils/form")
 const VoteCount = require("../models/leeches/voteCount");
-const serverSideUtils = require('../utils/server-side-utils');
 
-exports.home_get = (req, res, messages) => {
+exports.home_get = (req, res) => {
     let orderBy = req.cookies.orderBy ? req.cookies.orderBy : "voteCount";
     let orderDirection = req.cookies.orderDirection ? req.cookies.orderDirection : "descending";
 
     req.session.orderTitle = setOrderTitle(orderBy, orderDirection);
 
-    _refresh_home_page(req, res, orderBy, orderDirection);
+    return _refresh_home_page(req, res, orderBy, orderDirection);
 };
 
-exports.order_get = (req, res, messages) => {
+exports.order_get = (req, res) => {
     let orderBy = req.query.by;
     let orderDirection = req.query.direction;
 
     req.session.orderTitle = setOrderTitle(orderBy, orderDirection);
 
-    _refresh_home_page(req, res, orderBy, orderDirection);
+    return _refresh_home_page(req, res, orderBy, orderDirection);
 }
 
 const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
@@ -38,15 +35,15 @@ const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
         let sortParams = {};
         sortParams[orderBy] = orderDirection;
 
-        const options = {
-            page: 1,
-            limit: 2,
-            sort: sortParams,
-            collation: {
-                locale: 'en'
-            }
-        };
-
+        // const options = {
+        //     page: 1,
+        //     limit: 2,
+        //     sort: sortParams,
+        //     collation: {
+        //         locale: 'en'
+        //     }
+        // };
+        //
         // Leech.paginate({}, options, function (err, result){
         //     // let leeches = await Leech.find({}).sort(sortParams).exec();
         //
@@ -103,10 +100,8 @@ const getUserVotingStats = async (userId, voteDay) => {
         voteCount = await VoteCount.create(searchParams);
     }
 
-    let votingStats = {
+    return {
         votesToday: voteCount.voteDayCount.toString(),
         votesRemaining: (gConfig.maxVotesPerDay - voteCount.voteDayCount).toString()
     };
-
-    return votingStats;
 };
