@@ -4,7 +4,7 @@ describe("login", () => {
         cy.visit("http://localhost:7000");
     });
 
-    it.only("Successful user login", () => {
+    it("Successful user login", () => {
         cy.get("@login")
             .then((login) => {
                 cy.exec('npm run db:reset && npm run db:insert-verified-user');
@@ -54,10 +54,10 @@ describe("login", () => {
 
                 cy.get("[id='login']").click();
 
-                cy.get("[id='email']")
+                cy.get("[id='username']")
                     .clear()
-                    .type(login.validEmailNotRegistered)
-                    .should("have.value", login.validEmailNotRegistered);
+                    .type(login.invalidUserName)
+                    .should("have.value", login.invalidUserName);
 
                 cy.get("[id='password']")
                     .clear()
@@ -66,7 +66,7 @@ describe("login", () => {
 
                 cy.get("form").submit();
 
-                cy.contains("ERROR: Login credentials are incorrect");
+                cy.contains("No user found");
 
                 // Links available when not authenticated
                 cy.get("[id='home']").should("exist");
@@ -91,10 +91,10 @@ describe("login", () => {
 
                 cy.get("[id='login']").click();
 
-                cy.get("[id='email']")
+                cy.get("[id='username']")
                     .clear()
-                    .type(login.validEmail)
-                    .should("have.value", login.validEmail);
+                    .type(login.invalidUnverifiedUserName)
+                    .should("have.value", login.invalidUnverifiedUserName);
 
                 cy.get("[id='password']")
                     .clear()
@@ -103,7 +103,7 @@ describe("login", () => {
 
                 cy.get("form").submit();
 
-                cy.contains("INFO: Account has not been verified, new Verification Email sent");
+                cy.contains("User account not verified");
 
                 // Links available when not authenticated
                 cy.get("[id='home']").should("exist");
@@ -128,10 +128,10 @@ describe("login", () => {
 
                 cy.get("[id='login']").click();
 
-                cy.get("[id='email']")
+                cy.get("[id='username']")
                     .clear()
-                    .type(login.validEmail)
-                    .should("have.value", login.validEmail);
+                    .type(login.validUserName)
+                    .should("have.value", login.validUserName);
 
                 cy.get("[id='password']")
                     .clear()
@@ -140,7 +140,7 @@ describe("login", () => {
 
                 cy.get("form").submit();
 
-                cy.contains("Logged in as 'HARRY'");
+                cy.contains("Hi 'bcfcharry'");
 
                 // Links available when authenticated
                 cy.get("[id='home']").should("exist");
@@ -150,6 +150,8 @@ describe("login", () => {
                 cy.get("[id='login']").should("not.exist");
 
                 cy.get("[id='logout']").click();
+
+                cy.contains("You are logged out");
 
                 // Links available when not authenticated
                 cy.get("[id='home']").should("exist");

@@ -1,7 +1,6 @@
 {
   "validUserName": "bcfcharry",
-  "validEmail": "irving.beer77@ethereal.email",
-  "invalidUnregisteredEmail": "a@abc.com",
-  "validEmailNotRegistered": "a@abc.com",
+  "invalidUserName": "fdksjl",
+  "invalidUnverifiedUserName": "bcfcharry",
   "validPassword": "6srcxq2X4c"
 }
