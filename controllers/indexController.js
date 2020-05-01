@@ -25,12 +25,21 @@ exports.order_get = (req, res) => {
 const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
     let sess = req.session;
 
+    let filter = {};
+
     try {
         if (req.isAuthenticated()) {
             let votingStats = await _getUserVotingStats(req.user._id, gConfig.todaysUTCDate);
 
             sess.votesToday = votingStats.votesToday;
             sess.votesRemaining = votingStats.votesRemaining;
+
+            if (req.cookies["filterByUser-" + req.user._id]) {
+                filter["userId"] = req.user._id;
+            } else {
+                //by leeches here IF set
+            }
+
         }
 
         let sortParams = {};
@@ -47,9 +56,9 @@ const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
             }
         };
 
-        Leech.paginate({}, options, function (err, result) {
+        Leech.paginate(filter, options, function (err, result) {
             sess.pagination = {
-                currentPage: result.page,
+                currentPage: result.page ? result.page : 1,
                 previousPage: result.page > 1 ? result.page - 1 : false,
                 nextPage: result.page < result.totalPages ? result.page + 1 : false,
                 totalPages: result.totalPages,

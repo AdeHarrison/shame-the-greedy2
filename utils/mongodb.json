@@ -1,0 +1,128 @@
+/* 1 */
+{
+  "_id": ObjectId(
+  "5eac3059195e5a2c5f1bdd9c"
+  ),
+  "voteCount": 0,
+  "userId": "5eac301e195e5a2c5f1bdd99",
+  "shopName": "MALIK'S SUPERMARKET",
+  "cityTown": "BRISTOL",
+  "districtArea": "ST PAULS",
+  "comments": "claimed 'operator error' when massivley over-pricing",
+  "photoLocation": "/images/uploads/b9bd985d6f3ac0d9968967a76be381cb.jpeg",
+  "__v": 0
+}
+
+/* 2 */
+{
+  "_id": ObjectId(
+  "5eac306c195e5a2c5f1bdd9e"
+  ),
+  "voteCount": 0,
+  "userId": "5eac3028195e5a2c5f1bdd9a",
+  "shopName": "MALIK'S SUPERMARKET",
+  "cityTown": "BRISTOL",
+  "districtArea": "ST PAULS",
+  "comments": "claimed 'operator error' when massivley over-pricing",
+  "photoLocation": "/images/uploads/1efc08f5bf87c17d5afada9bd4721d05.jpeg",
+  "__v": 0
+}
+
+/* 3 */
+{
+  "_id": ObjectId(
+  "5eac30d4195e5a2c5f1bdda1"
+  ),
+  "voteCount": 0,
+  "userId": "5eac30b1195e5a2c5f1bdd9f",
+  "shopName": "MALIK'S SUPERMARKET",
+  "cityTown": "BRISTOL",
+  "districtArea": "ST PAULS",
+  "comments": "claimed 'operator error' when massivley over-pricing",
+  "photoLocation": "/images/uploads/2217af632830e2781f7c5f0af03b7ed2.jpeg",
+  "__v": 0
+}
+
+/* 1 */
+{
+  "_id": ObjectId(
+  "5eac301e195e5a2c5f1bdd99"
+  ),
+  "email": "1irving.beer77@ethereal.email",
+  "username": "bcfcharry1",
+  "password": "$2a$10$gn164dRc8W713rIJZP7SeukSU.pqPNwVM5s6Q/9XpIUbT9rW7000C",
+  "verified": true,
+  "verificationSalt": "01e6bf7e36aadf15",
+  "verification": "fc4237077658aa8707ebb9499ef3cdb0ca30cd81921a1065c74c7c5107d3d4dd8b558951cb3253984825c977758a09ae830d3571d2e7a5614f3b5db13e79068e",
+  "verificationExpiryDate": ISODate(
+  "2020-05-01T15:20:14.795Z"
+  ),
+  "__v": 0
+}
+
+/* 2 */
+{
+  "_id": ObjectId(
+  "5eac3028195e5a2c5f1bdd9a"
+  ),
+  "email": "2irving.beer77@ethereal.email",
+  "username": "bcfcharry2",
+  "password": "$2a$10$N5aGTlUEE1.wCxJQFRbP.uJDdWR4aJV0U77pI4bj8XFrd0P64lIQG",
+  "verified": true,
+  "verificationSalt": "b7fcadcc4fc321c5",
+  "verification": "b4fece3947800726c49f1fadf4c384359c7580d13aa63ead8b658b1de05fd75a348eea2cb29b1fb029af4b5eccfe1b9299844a7ddaf938c1e8c9ce33ddf266ee",
+  "verificationExpiryDate": ISODate(
+  "2020-05-01T15:20:24.863Z"
+  ),
+  "__v": 0
+}
+
+/* 3 */
+{
+  "_id": ObjectId(
+  "5eac30b1195e5a2c5f1bdd9f"
+  ),
+  "email": "3irving.beer77@ethereal.email",
+  "username": "bcfcharry3",
+  "password": "$2a$10$mXRG9anUEE7CxNyk7AQ.lenpg2h7L9hpKbeg/OMoFdv6A5EASb57W",
+  "verified": true,
+  "verificationSalt": "bcba05a4d9096890",
+  "verification": "c41f3a2c3c96a82e7513fa7d5e9ee2b1a6e43991023dcbd79c900c8357a159d8a7cbb3458083280481e6e781b9dcc4dc19eb7b746b62a1f719b716e0c7a86d9a",
+  "verificationExpiryDate": ISODate(
+  "2020-05-01T15:22:41.210Z"
+  ),
+  "__v": 0
+}
+
+/* 1 */
+{
+  "_id": ObjectId(
+  "5eac304d195e5a2c5f1bdd9b"
+  ),
+  "voteDayCount": 0,
+  "userId": "5eac301e195e5a2c5f1bdd99",
+  "voteDay": "20200501",
+  "__v": 0
+}
+
+/* 2 */
+{
+  "_id": ObjectId(
+  "5eac3062195e5a2c5f1bdd9d"
+  ),
+  "voteDayCount": 0,
+  "userId": "5eac3028195e5a2c5f1bdd9a",
+  "voteDay": "20200501",
+  "__v": 0
+}
+
+/* 3 */
+{
+  "_id": ObjectId(
+  "5eac30c8195e5a2c5f1bdda0"
+  ),
+  "voteDayCount": 0,
+  "userId": "5eac30b1195e5a2c5f1bdd9f",
+  "voteDay": "20200501",
+  "__v": 0
+}
