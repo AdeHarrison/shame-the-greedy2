@@ -12,9 +12,46 @@ mongo --host rs0/localhost:27017
 
 linux
 -----
-create mongodb-rs0 directory
+standalone replica set
+----------------------
+
+in terminal 1
+-------------
+    sudo mkdir /var/lib/mongodb-rs0
+
+in terminal 2
+-------------
 sudo systemctl stop mongodb && sudo mongod --port 27017 --dbpath /var/lib/mongodb-rs0 --replSet rs0
 mongo shameTheGreedyDB
 rs.initiate()
+
+real replica set
+----------------
+mkdir -p /srv/mongodb/rs0-0 /srv/mongodb/rs0-1 /srv/mongodb/rs0-2 /srv/mongodb/rs0-3
+
+in 3 terminals run -
+sudo mongod --port 27017 --dbpath /srv/mongodb/rs0-0 --replSet rs0 --smallfiles --oplogSize 128
+sudo mongod --port 27018 --dbpath /srv/mongodb/rs0-1 --replSet rs0 --smallfiles --oplogSize 128
+sudo mongod --port 27019 --dbpath /srv/mongodb/rs0-2 --replSet rs0 --smallfiles --oplogSize 128
+
+in another terminal run -
+mongo --port 27017
+
+rsconf = {
+           _id: "rs0",
+           members: [
+                      {
+                       _id: 0,
+                       host: "localhost:27017"
+                      }
+                    ]
+         }
+
+rs.initiate(rsconf)
+rs.add("localhost:27018")
+rs.add("localhost:27019")
+
+
+
 
 "databaseURL": "mongodb://localhost:27017/shameTheGreedyDB?replicaSet=rs0",

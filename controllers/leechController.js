@@ -42,7 +42,7 @@ exports.leech_upload_post = (req, res) => {
                 }
 
                 if (errors.length > 0) {
-                    res.render('upload', {
+                    res.render('leeches/upload', {
                         formData: formUtils.createUploadFormData(req),
                         errors: errors
                     });
@@ -130,6 +130,7 @@ const _leech_vote_get = async (userId, voteDay, leechId) => {
             votesRemaining: (gConfig.maxVotesPerDay - voteCount.voteDayCount).toString()
         };
     } catch (err) {
+        console.error(err);
         await session.abortTransaction();
 
         console.error(err);
