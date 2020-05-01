@@ -32,8 +32,6 @@ exports.leech_upload_post = (req, res) => {
         req.checkBody('comments', "Comments can be upto 100 characters long")
             .len({max: 100})
 
-        // TODO LIMIT FIZE SIZE
-
         req.getValidationResult().then(result => {
 
                 let errors = result.useFirstErrorOnly().array();

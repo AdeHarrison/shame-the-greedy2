@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     div.container
-        form(method="POST" action="/leeches/upload" enctype="multipart/form-data")
+        form(method="POST" action="/leeches/upload" enctype="multipart/form-data" onsubmit="return validateFileSize()")
             div.form-group
                 label(for="shopName") Shop Name:
                 input#shopName.form-control(type="text", placeholder="Shop name" name="shopName" value=formData.shopName)

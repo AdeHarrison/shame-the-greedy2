@@ -37,3 +37,19 @@ function refreshStats(votesToday, votesRemaining) {
         $('[id^="idUp-"]').hide();
     }
 }
+
+function validateFileSize() {
+    let useStockPhoto = document.getElementById("useStockPhoto");
+
+    if (!useStockPhoto.checked) {
+        var uploadFile = document.getElementById("shopPhoto").files[0]; // <input type="file" id="fileUpload" accept=".jpg,.png,.gif,.jpeg"/>
+
+        if (!uploadFile || uploadFile.size > 71680) // 2 mb for bytes.
+        {
+            alert("You must select a File under 70k bytes!");
+            return false;
+        }
+    }
+
+    return true;
+}
