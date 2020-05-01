@@ -59,6 +59,39 @@ html
                 else
                     a#lastPage(href='#' class="link-not-avaliable") Last Page &raquo;|
 
+                #gridSystemModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='gridModalLabel' aria-hidden='true')
+                    .modal-dialog.modal-lg(role='document')
+                        .modal-content
+                            .modal-header
+                                h5#gridModalLabel.modal-title Grids in modals
+                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            .modal-body
+                                .container-fluid.bd-example-row
+                                    .row
+                                        .col-md-4
+                                            input( type="checkbox" id="showMyLeeches" name="showMyLeeches")
+                                        .col-md-4.ml-auto .col-md-4 .ml-auto
+                                    .row
+                                        .col-md-3.ml-auto .col-md-3 .ml-auto
+                                        .col-md-2.ml-auto .col-md-2 .ml-auto
+                                    .row
+                                        .col-md-6.ml-auto .col-md-6 .ml-auto
+                                    .row
+                                        .col-sm-9
+                                            | Level 1: .col-sm-9
+                                            .row
+                                                .col-8.col-sm-6
+                                                    | Level 2: .col-8 .col-sm-6
+                                                .col-4.col-sm-6
+                                                    | Level 2: .col-4 .col-sm-6
+                            .modal-footer
+                                button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+                                button.btn.btn-primary(type='button') Save changes
+                .bd-example
+                    button.btn.btn-primary(type='button' data-toggle='modal' data-target='#gridSystemModal')
+                        | Filter The Greedy
+
             block content
             br
             hr
