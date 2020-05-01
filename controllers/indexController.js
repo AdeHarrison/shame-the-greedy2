@@ -23,10 +23,11 @@ exports.order_get = (req, res) => {
 }
 
 const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
+    let sess = req.session;
+
     try {
         if (req.isAuthenticated()) {
             let votingStats = await _getUserVotingStats(req.user._id, gConfig.todaysUTCDate);
-            let sess = req.session;
 
             sess.votesToday = votingStats.votesToday;
             sess.votesRemaining = votingStats.votesRemaining;
@@ -35,28 +36,35 @@ const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
         let sortParams = {};
         sortParams[orderBy] = orderDirection;
 
-        // const options = {
-        //     page: 1,
-        //     limit: 2,
-        //     sort: sortParams,
-        //     collation: {
-        //         locale: 'en'
-        //     }
-        // };
-        //
-        // Leech.paginate({}, options, function (err, result){
-        //     // let leeches = await Leech.find({}).sort(sortParams).exec();
-        //
-        //     res.cookie('orderBy', orderBy)
-        //         .cookie('orderDirection', orderDirection)
-        //         .render("index", formUtils.createIndexParams(req, result.docs));
-        //
-        // });
-        let leeches = await Leech.find({}).sort(sortParams).exec();
+        let showPage = req.query.showPage ? req.query.showPage: 1;
 
-        res.cookie('orderBy', orderBy)
-            .cookie('orderDirection', orderDirection)
-            .render("index", formUtils.createIndexParams(req, leeches));
+        const options = {
+            page: showPage,
+            limit: 3,
+            sort: sortParams,
+            collation: {
+                locale: 'en'
+            }
+        };
+
+        Leech.paginate({}, options, function (err, result) {
+            let pagination = {
+                previousPage: result.page > 1 ? result.page - 1 : false,
+                nextPage: result.page < result.totalPages ? result.page + 1 : false,
+
+                // currentPage:result.page,
+                totalPages:result.totalPages,
+                // totalLeeches: result.totalDocs,
+                // hasPrevPage: result.hasPrevPage,
+                // hasNextPage: result.hasNextPage
+            }
+            sess.pagination = pagination;
+
+            res.cookie('orderBy', orderBy)
+                .cookie('orderDirection', orderDirection)
+                .render("index", formUtils.createIndexParams(req, result.docs));
+
+        });
     } catch (err) {
         console.error(err);
     }
