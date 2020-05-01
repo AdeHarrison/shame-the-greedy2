@@ -56,7 +56,7 @@ describe("Registration", () => {
     it.skip("Successful verification email resent for un-verified user account", () => {
         cy.get("@register")
             .then((register) => {
-                cy.exec('npm run db:insert-unverified-user').then(() => {
+                cy.exec('npm run db:unverified-user').then(() => {
 
                     // Links available when not authenticated
                     cy.get("[id='home']").should("exist");
@@ -93,7 +93,7 @@ describe("Registration", () => {
     it.skip("Rejection of new registration for user already registered and verified", () => {
         cy.get("@register")
             .then((register) => {
-                cy.exec('npm run db:insert-verified-user').then(() => {
+                cy.exec('npm run db:verified-user').then(() => {
 
                     // Links available when not authenticated
                     cy.get("[id='home']").should("exist");

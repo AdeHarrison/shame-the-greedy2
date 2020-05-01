@@ -2,7 +2,7 @@ import 'cypress-file-upload';
 
 describe("upload", () => {
     beforeEach(() => {
-        cy.exec('npm run db:reset && npm run db:insert-verified-user');
+        cy.exec('npm run db:reset && npm run db:verified-user');
         cy.fixture("user/login.json").as("login");
         cy.fixture("leech/upload.json").as("upload");
         cy.visit("http://localhost:7000");

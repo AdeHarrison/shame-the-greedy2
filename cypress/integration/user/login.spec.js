@@ -7,7 +7,7 @@ describe("login", () => {
     it("Successful user login", () => {
         cy.get("@login")
             .then((login) => {
-                cy.exec('npm run db:reset && npm run db:insert-verified-user');
+                cy.exec('npm run db:reset && npm run db:verified-user');
 
                 // Links available when not authenticated
                 cy.get("[id='home']").should("exist");
@@ -80,7 +80,7 @@ describe("login", () => {
     it("Rejection of unverified user account", () => {
         cy.get("@login")
             .then((login) => {
-                cy.exec('npm run db:reset && npm run db:insert-unverified-user');
+                cy.exec('npm run db:reset && npm run db:unverified-user');
 
                 // Links available when not authenticated
                 cy.get("[id='home']").should("exist");
@@ -117,7 +117,7 @@ describe("login", () => {
     it("Successful user logout", () => {
         cy.get("@login")
             .then((login) => {
-                cy.exec('npm run db:reset && npm run db:insert-verified-user');
+                cy.exec('npm run db:reset && npm run db:verified-user');
 
                 // Links available when not authenticated
                 cy.get("[id='home']").should("exist");

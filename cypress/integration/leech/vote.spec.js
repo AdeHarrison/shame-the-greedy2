@@ -7,7 +7,7 @@ describe("vote", () => {
     it.skip("Successful increase in votes of shame", () => {
         cy.get("@login")
             .then((login) => {
-                cy.exec('npm run db:reset && npm run db:insert-verified-user');
+                cy.exec('npm run db:reset && npm run db:verified-user');
 
                 // Links available when not authenticated
                 cy.get("[id='home']").should("exist");
@@ -46,7 +46,7 @@ describe("vote", () => {
     it.skip("Successful decrease in votes of shame", () => {
         cy.get("@login")
             .then((login) => {
-                cy.exec('npm run db:reset && npm run db:insert-verified-user');
+                cy.exec('npm run db:reset && npm run db:verified-user');
 
                 // Links available when not authenticated
                 cy.get("[id='home']").should("exist");
