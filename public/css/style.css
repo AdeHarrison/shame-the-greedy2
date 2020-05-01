@@ -15,7 +15,7 @@ html {
 }
 
 div.image {
-    width: 200px;
+    max-width: 200px;
     height: 200px;
     border-radius: 10px;
     margin-left: 28px;
