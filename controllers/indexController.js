@@ -36,7 +36,7 @@ const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
         let sortParams = {};
         sortParams[orderBy] = orderDirection;
 
-        let showPage = req.query.showPage ? req.query.showPage: 1;
+        let showPage = req.query.showPage ? req.query.showPage : 1;
 
         const options = {
             page: showPage,
@@ -48,17 +48,12 @@ const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
         };
 
         Leech.paginate({}, options, function (err, result) {
-            let pagination = {
+            sess.pagination = {
+                currentPage: result.page,
                 previousPage: result.page > 1 ? result.page - 1 : false,
                 nextPage: result.page < result.totalPages ? result.page + 1 : false,
-
-                // currentPage:result.page,
-                totalPages:result.totalPages,
-                // totalLeeches: result.totalDocs,
-                // hasPrevPage: result.hasPrevPage,
-                // hasNextPage: result.hasNextPage
+                totalPages: result.totalPages,
             }
-            sess.pagination = pagination;
 
             res.cookie('orderBy', orderBy)
                 .cookie('orderDirection', orderDirection)

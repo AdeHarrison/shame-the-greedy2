@@ -36,15 +36,27 @@ html
                 each error in errors
                     div(class="alert alert-danger") #{error.msg}
 
-            a#firstPage(href='/?showPage=1' class="previous") |&laquo; First Page
+            | Showing Page #{session.pagination.currentPage} of #{session.pagination.totalPages}
+
+            if session.pagination.currentPage > 1
+                a#firstPage(href='/?showPage=1' class="link-available") |&laquo; First Page
+            else
+                a#firstPage(href='#' class="link-not-avaliable") |&laquo; First Page
 
             if session.pagination.previousPage
-                a#previousPage(href='/?showPage=' + session.pagination.previousPage class="previous") &laquo; Previous Page
+                a#previousPage(href='/?showPage=' + session.pagination.previousPage class="link-available") &laquo; Previous Page
+            else
+                a#previousPage(href='#' class="link-not-avaliable") &laquo; Previous Page
 
             if session.pagination.nextPage
-                a#nextPage(href='/?showPage=' + session.pagination.nextPage class="next") Next Page &raquo;
+                a#nextPage(href='/?showPage=' + session.pagination.nextPage class="link-available") Next Page &raquo;
+            else
+                a#nextPage(href='#' class="link-not-avaliable") Next Page &raquo;
 
-            a#lastPage(href='/?showPage=' + session.pagination.totalPages class="next") Last Page &raquo;|
+            if session.pagination.currentPage < session.pagination.totalPages
+                a#lastPage(href='/?showPage=' + session.pagination.totalPages class="link-available") Last Page &raquo;|
+            else
+                a#lastPage(href='#' class="link-not-avaliable") Last Page &raquo;|
 
             block content
             br

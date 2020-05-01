@@ -71,12 +71,12 @@ a:hover {
     color: black;
 }
 
-.previous {
+.link-not-avaliable {
     background-color: lightgray;
     color: black;
 }
 
-.next {
+.link-available {
     background-color: green;
     color: white;
 }
