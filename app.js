@@ -1,15 +1,16 @@
 const express = require('express');
 const path = require('path');
+const fs = require("fs");
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const passport = require('passport');
+const cookieParser = require('cookie-parser');
+
 const config = require('./config/config.js');
 const schedule = require('node-schedule');
 const serverSideUtils = require('./utils/server-side-utils');
-const cookieParser = require('cookie-parser');
-
 const User = require('./models/users/user');
 const Leech = require("./models/leeches/leech");
 const VoteCount = require("./models/leeches/voteCount");
@@ -29,8 +30,19 @@ db.once("open", () => {
     if (process.env.NODE_DROP_DB === "true") {
         console.log("Dropping Database");
         db.dropDatabase().then(() => {
-            configureInitialDatabase()
+            configureInitialDatabase();
             console.log("Database Dropped");
+
+            fs.readdir("./public/images/uploads", (err, files) => {
+                if (err) throw err;
+
+                for (const file of files) {
+                    fs.unlink(path.join("./public/images/uploads", file), err => {
+                        if (err) throw err;
+                    });
+                }
+                console.log("Uploaded Files Deleted");
+            });
         });
     } else {
         console.log("Keeping Database");

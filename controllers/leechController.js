@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 const sharp = require("sharp");
 const path = require("path");
+const fs = require("fs");
 
 const formUtils = require("../utils/form")
 const security = require('../utils/security');
@@ -75,11 +76,16 @@ exports.leech_upload_post = (req, res) => {
                                 if (err) {
                                     console.log(err);
                                 } else {
-                                    req.flash('success', 'Upload Successful');
-                                    res.redirect('/');
+                                    fs.unlink(path.join("./public", uploadedPhotoLocation), err => {
+                                        if (err) {
+                                            throw err;
+                                        }
+
+                                        req.flash('success', 'Upload Successful');
+                                        res.redirect('/');
+                                    });
                                 }
                             });
-
                         });
                     }
                 }

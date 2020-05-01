@@ -156,7 +156,7 @@ const _verify = async (req, res) => {
             await user.save();
 
             req.flash('success', 'User Verified');
-            return res.redirect('/');
+            return res.redirect('/users/login');
         }
     } catch (err) {
         console.error(err);
