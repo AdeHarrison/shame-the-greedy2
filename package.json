@@ -12,7 +12,9 @@
     "db:unverified-user": "mongoimport -h rs0/localhost:27017 -d shameTheGreedyDB -c users --file utils/unverified-user.json",
     "db:unverified-expired-user": "mongoimport -h rs0/localhost:27017 -d shameTheGreedyDB -c users --file utils/unverified-expired-user.json",
     "db:createUniqueEmailIndex": "mongo --host rs0/localhost:27017 shameTheGreedyDB --eval \"db.users.createIndex({email:1}, {unique:true})\"",
-    "db:createUniqueUserNameIndex": "mongo --host rs0/localhost:27017 shameTheGreedyDB --eval \"db.users.createIndex({username:1}, {unique:true})\""
+    "db:createUniqueUserNameIndex": "mongo --host rs0/localhost:27017 shameTheGreedyDB --eval \"db.users.createIndex({username:1}, {unique:true})\"",
+    "db:backup-3_users_6_leeches_21_votes": "mongodump --host rs0/localhost:27017 -d shameTheGreedyDB -o mongodb/backups/3_users_6_leeches_21_votes",
+    "db:restore-3_users_6_leeches_21_votes": "npm run db:reset & mongorestore --host rs0/localhost:27017 -d shameTheGreedyDB mongodb/backups/3_users_6_leeches_21_votes/shameTheGreedyDB"
   },
   "author": "Brad Traversy",
   "license": "ISC",

@@ -9,6 +9,7 @@ windows
 -------
 stop service if running
 mongo --host rs0/localhost:27017
+rs.initiate()
 
 linux
 -----
