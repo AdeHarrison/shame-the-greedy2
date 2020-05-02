@@ -34,10 +34,10 @@ const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
             sess.votesToday = votingStats.votesToday;
             sess.votesRemaining = votingStats.votesRemaining;
 
-            if (req.cookies["filterByUser-" + req.user._id]) {
+            if (req.cookies["filterMyLeeches-" + req.user._id]) {
                 filter["userId"] = req.user._id;
             } else {
-                //by leeches here IF set
+                //todo by leeches here IF set
             }
 
         }
@@ -62,6 +62,7 @@ const _refresh_home_page = async (req, res, orderBy, orderDirection) => {
                 previousPage: result.page > 1 ? result.page - 1 : false,
                 nextPage: result.page < result.totalPages ? result.page + 1 : false,
                 totalPages: result.totalPages,
+                totalGreeders: result.totalDocs
             }
 
             res.cookie('orderBy', orderBy)

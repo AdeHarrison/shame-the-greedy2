@@ -30,7 +30,7 @@ describe("login", () => {
 
                 cy.get("form").submit();
 
-                cy.contains("Hi 'bcfcharry'");
+                cy.contains("Hi 'bcfcharry1'");
 
                 // Links available when authenticated
                 cy.get("[id='home']").should("exist");
@@ -140,7 +140,7 @@ describe("login", () => {
 
                 cy.get("form").submit();
 
-                cy.contains("Hi 'bcfcharry'");
+                cy.contains("Hi 'bcfcharry1'");
 
                 // Links available when authenticated
                 cy.get("[id='home']").should("exist");

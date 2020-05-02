@@ -9,11 +9,11 @@ function setFileUploadButtonState() {
 }
 
 function voteUp(leechId) {
-    let url = "/users/authenticated";
+    let url = "/users/details";
 
-    $.get({url: url}).then((isAuthenticated) => {
+    $.get({url: url}).then((details) => {
 
-        if (!isAuthenticated) {
+        if (!details.isAuthenticated) {
             window.location.replace("/users/login");
         } else {
             url = "/leeches/vote?vote=1&id=" + leechId;

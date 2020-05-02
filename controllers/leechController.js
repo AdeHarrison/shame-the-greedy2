@@ -63,7 +63,7 @@ exports.leech_upload_post = (req, res) => {
                                 console.log(err);
                             } else {
                                 req.flash('success', 'Upload Successful');
-                                res.cookie("filterByUser-" + req.user._id, new Array(req.user._id))
+                                res.cookie("filterMyLeeches-" + req.user._id, true)
                                     .redirect('/');
                             }
                         });
@@ -81,7 +81,7 @@ exports.leech_upload_post = (req, res) => {
                                         }
 
                                         req.flash('success', 'Upload Successful');
-                                        res.cookie("filterByUser-" + req.user._id, new Array(req.user._id))
+                                        res.cookie("filterMyLeeches-" + req.user._id, true)
                                             .redirect('/');
                                     });
                                 }

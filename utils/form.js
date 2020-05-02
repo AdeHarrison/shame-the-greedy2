@@ -19,8 +19,8 @@ const createRegisterFormData = (req) => {
         };
     } else {
         return {
-            email: "irving.beer77@ethereal.email",
-            username: "bcfcharry",
+            email: "1irving.beer77@ethereal.email",
+            username: "bcfcharry1",
             password: "6srcxq2X4c",
             password2: "6srcxq2X4c"
         };
@@ -40,7 +40,7 @@ const createLoginFormData = (req) => {
         };
     } else {
         return {
-            username: "bcfcharry",
+            username: "bcfcharry1",
             password: "6srcxq2X4c",
         };
     }

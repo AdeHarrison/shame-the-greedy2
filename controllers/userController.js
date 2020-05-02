@@ -37,8 +37,15 @@ exports.logout_get = (req, res) => {
     res.redirect('/users/login');
 };
 
-exports.authenticated = (req, res) => {
-    res.send(req.isAuthenticated());
+exports.details_get = (req, res) => {
+    if (req.user) {
+        res.send({
+            isAuthenticated: req.isAuthenticated(),
+            filterMyLeechesCookieName: "filterMyLeeches-" + req.user._id
+        });
+    } else {
+        res.send(false);
+    }
 };
 
 const _registerUser = async (req, res) => {

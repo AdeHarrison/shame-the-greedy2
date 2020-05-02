@@ -3,7 +3,7 @@
   "invalidUserNamePaddedTooShort": "     abc     ",
   "invalidUserNamePaddedTooLong": "    21MixedCaseCharsxxxc   ",
   "invalidUserNameInvalidChars": "20MixedCaseCharsxxx_.-",
-  "validEmail": "irving.beer77@ethereal.email",
+  "validEmail": "1irving.beer77@ethereal.email",
   "invalidEmailPaddedTooShort": " a@c ",
   "invalidEmailTooShort": "a@c",
   "invalidEmailPaddedTooLong": " 51MixedCaseChars@XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.XXX ",
