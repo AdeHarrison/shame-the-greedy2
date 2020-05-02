@@ -10,7 +10,9 @@
     "db:reset": "mongo --host rs0/localhost:27017 shameTheGreedyDB --eval \"db.dropDatabase()\"",
     "db:verified-user": "mongoimport -h rs0/localhost:27017 -d shameTheGreedyDB -c users --file utils/verified-user.json & npm run db:createUniqueEmailIndex & npm run db:createUniqueUserNameIndex",
     "db:unverified-user": "mongoimport -h rs0/localhost:27017 -d shameTheGreedyDB -c users --file utils/unverified-user.json",
-    "db:unverified-expired-user": "mongoimport -h rs0/localhost:27017 -d shameTheGreedyDB -c users --file utils/unverified-expired-user.json"
+    "db:unverified-expired-user": "mongoimport -h rs0/localhost:27017 -d shameTheGreedyDB -c users --file utils/unverified-expired-user.json",
+    "db:createUniqueEmailIndex": "mongo --host rs0/localhost:27017 shameTheGreedyDB22 --eval \"db.users.createIndex({email:1}, {unique:true})\"",
+    "db:createUniqueUserNameIndex": "mongo --host rs0/localhost:27017 shameTheGreedyDB22 --eval \"db.users.createIndex({username:1}, {unique:true})\""
   },
   "author": "Brad Traversy",
   "license": "ISC",

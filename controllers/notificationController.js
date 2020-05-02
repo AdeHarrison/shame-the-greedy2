@@ -9,7 +9,7 @@ exports.sendVerificationEmail = (req, email, verification) => {
     let link = "http://" + req.get("host") + "/users/verify?id=" + verification;
 
     // todo bodge until read pop3 in cypress sorted
-    if (process.env.NODE_ENV !== 'prod') {
+    if (process.env.NODE_ENV === 'testing') {
         fs.writeFile("utils/link.txt", link, function (err) {
             if (err) {
                 return console.log(err);
