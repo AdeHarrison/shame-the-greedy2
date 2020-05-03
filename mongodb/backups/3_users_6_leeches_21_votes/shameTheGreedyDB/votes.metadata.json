@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"shameTheGreedyDB.votes"}],"uuid":"8c6044383ce94c2a8f025dd8c1da4ad1"}
