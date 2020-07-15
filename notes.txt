@@ -22,7 +22,12 @@ in terminal 1
 
 in terminal 2
 -------------
-sudo systemctl stop mongodb && sudo mongod --port 27017 --dbpath /var/lib/mongodb-rs0 --replSet rs0
+# not necessary if already stopped
+sudo systemctl stop mongodb
+
+sudo mongod --port 27017 --dbpath /var/lib/mongodb-rs0 --replSet rs0
+
+# for the first and only time
 mongo shameTheGreedyDB
 rs.initiate()
 

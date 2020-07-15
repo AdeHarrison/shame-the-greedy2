@@ -2,7 +2,7 @@
   "development": {
     "config_id": "development",
     "node_port": 7000,
-    "databaseURL": "mongodb+srv://ade:harry@cluster0-txaau.gcp.mongodb.net/test?retryWrites=true&w=majority",
+    "databaseURL": "",
     "verification_timeout": 3600,
     "database": "shameTheGreedyDB",
     "maxVotesPerDay": 100,
@@ -16,10 +16,10 @@
     },
     "json_indentation": 4
   },
-  "testing": {
-    "config_id": "testing",
+  "testing": {mongodb+srv://ade:harry@cluster0-txaau.gcp.mongodb.net/test?retryWrites=true&w=majority
+    "config_id",: "testing",
     "maxVotesPerDay": 10
-  },
+  },z
   "staging": {
     "config_id": "staging",
     "verification_timeout": 604800,
